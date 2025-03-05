@@ -5,12 +5,40 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:fastfood"
     xmlns:pages="clr-namespace:fastfood.Pages"
-    Shell.FlyoutBehavior="Flyout"
+    Shell.FlyoutBehavior="Locked"
+    Shell.FlyoutWidth="200"
     Title="fastfood">
 
     <ShellContent
         Title="Home"
+        Icon="ic_home_ff.png"
         ContentTemplate="{DataTemplate pages:MainPage}"
         Route="MainPage" />
+    
+    <ShellContent
+        Title="Provider"
+        Icon="ic_provider_ff.png"
+        ContentTemplate="{DataTemplate pages:ProviderPage}"
+        Route="MainPage"/>
+
+    <ShellContent
+        Title="Products"
+        Icon="ic_food_ff.png"
+        ContentTemplate="{DataTemplate pages:ProductsPage}"
+        Route="MainPage"/>
+
+    <ShellContent
+        Title="Exemption"
+        Icon="ic_users_ff.png"
+        ContentTemplate="{DataTemplate pages:ExemptionPage}"
+        Route="MainPage"/>
+    <Shell.FlyoutFooter>
+        <Image
+            Source="ic_logout_ff.png"
+            HorizontalOptions="Start"
+            WidthRequest="20"
+            Margin="15,0,0,25"
+            />
+    </Shell.FlyoutFooter>
 
 </Shell>
