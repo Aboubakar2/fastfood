@@ -28,6 +28,25 @@ public partial class HomeViewModel : ObservableObject
     private bool _isLoading;
 
 
+   
+
+    [ObservableProperty,NotifyPropertyChangedFor(nameof(TaxAmount))]
+    [NotifyPropertyChangedFor(nameof(Total))]
+    private decimal _subTotal;
+
+    [ObservableProperty, NotifyPropertyChangedFor(nameof(TaxAmount))]
+    [NotifyPropertyChangedFor(nameof(Total))]
+    private decimal _taxPercentage;
+
+
+    public decimal TaxAmount => (SubTotal * TaxPercentage) / 100;
+    public decimal Total => SubTotal + TaxAmount;
+
+
+
+    public ObservableCollection<CartModel> CartItems { get; set; } = new();
+
+
     [ObservableProperty]
     private MenuItem[] _menuItems = [];
 
@@ -36,6 +55,12 @@ public partial class HomeViewModel : ObservableObject
     public HomeViewModel(DatabaseService databaseService)
     {
         _databaseService = databaseService;
+        CartItems.CollectionChanged += CartItems_CollectionChanged;
+    }
+
+    private void CartItems_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        RecalculateAmount();
     }
 
     private bool _isInitialized;
@@ -88,7 +113,80 @@ public partial class HomeViewModel : ObservableObject
 
         
     }
+    [RelayCommand]
+    private   void AddToCart(MenuItem menuItem)
+    {
+        var cartItem = CartItems.FirstOrDefault(c => c.ItemId == menuItem.Id);
+        if(cartItem==null)
+        {
+            
+            cartItem = new CartModel()
+            {
+                ItemId = menuItem.Id,
+                Icon = menuItem.Icon,
+                Name = menuItem.Name,
+                Price = menuItem.Price,
+                Quantity = 1
+            };
+
+            CartItems.Add(cartItem);
+        }
+        else
+        {
+            cartItem.Quantity++;
+            RecalculateAmount();
+        }
+    }
+
+    [RelayCommand]
+    private void IncreaseQuantity(CartModel cartItem)
+    {
+        cartItem.Quantity++;
+        RecalculateAmount();
+    }
+    [RelayCommand]
+    private void DecreaseQuantity(CartModel cartItem)
+    {
+        cartItem.Quantity--;
+        if (cartItem.Quantity == 0)
+            CartItems.Remove(cartItem);
+        else
+            RecalculateAmount();
+    }
 
 
+    [RelayCommand]
+    private void RemoveFromCart(CartModel cartItem) => CartItems.Remove(cartItem);
+
+
+
+
+    [RelayCommand]
+    public async Task TaxPercentageClickAsync()
+    {
+        var result = await Shell.Current.DisplayPromptAsync("Tax Percentage ", "Enter the applicable tax percentage ", placeholder: "10", initialValue: TaxPercentage.ToString());
+            if(!string.IsNullOrEmpty(result))
+            {
+                if(!int.TryParse(result,out int enteredTaxpercentage))
+                {
+                    await Shell.Current.DisplayAlert("Invalid Value ", "Entered Tax Percentage is invalid ", "Ok");
+                    return;
+                }
+                if(enteredTaxpercentage > 100)
+                {
+                    await Shell.Current.DisplayAlert("Invalid Value ", "Entered Tax Percentage is invalid ", "Ok");
+                    return;
+                }
+
+            TaxPercentage = enteredTaxpercentage;
+            }
+    }
+
+    [RelayCommand]
+    private void ClearCart() => CartItems.Clear();
+    private void RecalculateAmount()
+    {
+        SubTotal = CartItems.Sum(c => c.Amount);
+    }
 
 }
