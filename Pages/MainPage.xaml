@@ -202,7 +202,7 @@
 
                         <HorizontalStackLayout Grid.Row="1" Grid.Column="0"  Spacing="5">
                             <Label  Text="Tax" VerticalOptions="Center" Style="{StaticResource lbl}"/>
-                            <Label  Padding="5,0" BackgroundColor="Wheat" Text="{Binding TaxPercentage}" VerticalOptions="Center"  Style="{StaticResource lbl}">
+                            <Label  Padding="5,0" BackgroundColor="Wheat" Text="{Binding TaxPercentage,StringFormat='{0}%'}" VerticalOptions="Center"  Style="{StaticResource lbl}">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding TaxPercentageClickCommand}"/>
                                 </Label.GestureRecognizers>

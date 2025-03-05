@@ -19,19 +19,19 @@
         Title="Provider"
         Icon="ic_provider_ff.png"
         ContentTemplate="{DataTemplate pages:ProviderPage}"
-        Route="MainPage"/>
+        Route="ProviderPage"/>
 
     <ShellContent
         Title="Products"
         Icon="ic_food_ff.png"
         ContentTemplate="{DataTemplate pages:ProductsPage}"
-        Route="MainPage"/>
+        Route="ProductsPage"/>
 
     <ShellContent
         Title="Exemption"
         Icon="ic_users_ff.png"
         ContentTemplate="{DataTemplate pages:ExemptionPage}"
-        Route="MainPage"/>
+        Route="ExemptionPage"/>
     <Shell.FlyoutFooter>
         <Image
             Source="ic_logout_ff.png"
