@@ -42,21 +42,21 @@
 
                                 <!-- Ligne 1 :  -->
                                 <Label Grid.Row="0" Grid.Column="0" Margin="200,0,0,0" TextColor="#800000" Text="Nom" FontAttributes="Bold" />
-                                <Entry Grid.Row="1" Grid.Column="0" Margin="200,0,0,0" HorizontalOptions="Start" WidthRequest="400" Placeholder="Ex: Niébé" BackgroundColor="White" />
+                                <Entry Grid.Row="1" Grid.Column="0" Margin="200,0,0,0" HorizontalOptions="Start" WidthRequest="200" Placeholder="Ex: Niébé" BackgroundColor="White" />
 
                                 <Label Grid.Row="0" Grid.Column="1" TextColor="#800000" Text="Qté(Optionnel" FontAttributes="Bold" />
-                                <Entry Grid.Row="1" Grid.Column="1"  HorizontalOptions="Start" WidthRequest="400" Placeholder="Nom du produit" BackgroundColor="White" />
+                                <Entry Grid.Row="1" Grid.Column="1"  HorizontalOptions="Start" WidthRequest="200" Placeholder="Nom du produit" BackgroundColor="White" />
 
                                 <!-- Ligne 2 : Date et Quantité -->
                                 <Label Grid.Row="2" Margin="200,0,0,0" Grid.Column="0" TextColor="#800000" Text="Catégorie" FontAttributes="Bold" />
-                                <Picker Grid.Row="3" Margin="200,0,0,0" HorizontalOptions="Start" WidthRequest="400"  TextColor="Black" Grid.Column="0"   BackgroundColor="White" />
+                                <Picker Grid.Row="3" Margin="200,0,0,0" HorizontalOptions="Start" WidthRequest="200"  TextColor="Black" Grid.Column="0"   BackgroundColor="White" />
 
                                 <Label Grid.Row="2" Grid.Column="1" TextColor="#800000" Text="Image" FontAttributes="Bold" />
-                                <Picker Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" WidthRequest="400"  BackgroundColor="White" />
+                                <Picker Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" WidthRequest="200"  BackgroundColor="White" />
 
                                 <!-- Ligne 3 : Statut -->
                                 <Label Grid.Row="4" Margin="200,0,0,0" Grid.Column="0" TextColor="#800000" Text="Prix" FontAttributes="Bold" />
-                                <Picker Grid.Row="5" Grid.Column="0" Margin="200,0,0,0" HorizontalOptions="Start" WidthRequest="400"  Grid.ColumnSpan="2" BackgroundColor="White" />
+                                <Picker Grid.Row="5" Grid.Column="0" Margin="200,0,0,0" HorizontalOptions="Start" WidthRequest="200"  Grid.ColumnSpan="2" BackgroundColor="White" />
 
                                 <!-- Bouton Valider -->
                                 <Button Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"
@@ -90,6 +90,7 @@
                                        VerticalOptions="FillAndExpand">
                                     <!-- Image arrondie -->
                                     <Border
+                                        
                                         BackgroundColor="LightGray" 
                                         StrokeThickness="1" 
                                         Stroke="Gray" 
@@ -97,6 +98,9 @@
                                         WidthRequest="40" 
                                         HorizontalOptions="Center" 
                                         VerticalOptions="Center">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="56"/>
+                                        </Border.StrokeShape>
                                         <Image 
                                             Source="burger.jpg" 
                                            Aspect="AspectFill" 

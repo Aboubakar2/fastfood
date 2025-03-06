@@ -3,10 +3,76 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="fastfood.Pages.ExemptionPage"
              Title="ExemptionPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <!-- Contenu principal -->
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Contenu principal -->
+        <ScrollView Grid.Row="1">
+            <StackLayout Margin="20" Spacing="15">
+                <!-- Conteneur pour le contenu des onglets -->
+                <ContentView>
+                    <StackLayout>
+                        <!-- Conteneur unique -->
+
+                        <!-- Contenu par défaut : Tab Commande -->
+                        <StackLayout x:Name="CommandeContent" IsVisible="true">
+                            <!-- Formulaire -->
+                            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+
+                                <!-- Ligne 1 : Fournisseur et Produit -->
+                                <Label Grid.Row="0" Grid.Column="0" Margin="200,0,0,0" TextColor="#800000" Text="Nom" FontAttributes="Bold" />
+                                <Entry Grid.Row="1" Grid.Column="0" Margin="200,0,0,0" HorizontalOptions="Start" WidthRequest="400" Placeholder="Ex:Assogba" BackgroundColor="White" />
+
+                                <Label Grid.Row="0" Grid.Column="1" TextColor="#800000" Text="Rôle" FontAttributes="Bold" />
+                                <Picker Grid.Row="1" Grid.Column="1"  HorizontalOptions="Start" WidthRequest="400" BackgroundColor="White" />
+
+                                <!-- Ligne 2 : Date et Quantité -->
+                                <Label Grid.Row="2" Margin="200,0,0,0" Grid.Column="0" TextColor="#800000" Text="Mail" FontAttributes="Bold" />
+                                <DatePicker Grid.Row="3" Margin="200,0,0,0" HorizontalOptions="Start" WidthRequest="400"  TextColor="Black" Grid.Column="0" Format="dd/MM/yyyy"  BackgroundColor="White" />
+
+                                <!-- Bouton Valider -->
+                                <Button Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
+                                 Text="Valider"
+                                 WidthRequest="100"
+                                 BackgroundColor="#800000"
+                                 HorizontalOptions="Start"
+                                 TextColor="White" 
+                                 CornerRadius="10" 
+                                 />
+                            </Grid>
+
+                            <!-- Tableau statique des commandes -->
+                            <Label Text="Commandes" TextColor="#800000" FontAttributes="Bold" FontSize="Large" Margin="0,20,0,10" />
+                            <Grid ColumnDefinitions="3*,2*,2*,2*" RowDefinitions="Auto,*"   BackgroundColor="#E2E2E2" Margin="20,0" >
+
+                                <!-- En-tête du tableau -->
+                                <Label Grid.Row="0" Grid.Column="0" TextColor="Black" Text="Nom" Padding="10" FontAttributes="Bold" />
+                                <Label Grid.Row="0" Grid.Column="1" TextColor="Black" Text="Mail" Padding="10" FontAttributes="Bold" />
+                                <Label Grid.Row="0" Grid.Column="2" TextColor="Black" Text="Rôle" Padding="10" FontAttributes="Bold" />
+                                <Label Grid.Row="0" Grid.Column="3" TextColor="Black" Text="Actions" Padding="10" FontAttributes="Bold" />
+
+                                <!-- Exemple de ligne de commande -->
+                                <Label Grid.Row="1" Grid.Column="0" TextColor="Black" Text="Isaac" Padding="5" BackgroundColor="White" />
+                                <Label Grid.Row="1" Grid.Column="1" TextColor="Black" Text="mail@google.com" Padding="5" BackgroundColor="White" />
+                                <Label Grid.Row="1" Grid.Column="2" TextColor="Black" Text="Admin" Padding="5" BackgroundColor="White" />
+                                <HorizontalStackLayout Grid.Row="1" Grid.Column="3" Spacing="10" Padding="5" BackgroundColor="White">
+                                    <ImageButton Source="ic_edit_ff.png" WidthRequest="20" HeightRequest="20" BackgroundColor="Transparent" />
+                                    <ImageButton Source="ic_trash_ff.png" WidthRequest="20" HeightRequest="20" BackgroundColor="Transparent" />
+                                </HorizontalStackLayout>
+                            </Grid>
+                        </StackLayout>
+
+                    </StackLayout>
+                </ContentView>
+
+                <!-- Bouton Imprimer -->
+                <Button Text="Imprimer" 
+                     BackgroundColor="#800000" 
+                     TextColor="White" 
+                     CornerRadius="10" 
+                     HorizontalOptions="End" 
+                     Margin="0,20,20,0" />
+            </StackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>
