@@ -5,16 +5,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:fastfood"
     xmlns:pages="clr-namespace:fastfood.Pages"
+    Shell.FlyoutBackgroundColor="#f5deb3"
     Shell.FlyoutBehavior="Locked"
     Shell.FlyoutWidth="150"
     Title="fastfood">
+
 
     <ShellContent
         Title="Home"
         Icon="ic_home_ff.png"
         ContentTemplate="{DataTemplate pages:MainPage}"
         Route="MainPage" />
-    
     <ShellContent
         Title="Provider"
         Icon="ic_provider_ff.png"
