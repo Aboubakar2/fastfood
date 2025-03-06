@@ -1,4 +1,5 @@
 ﻿using fastfood.Data;
+using fastfood.Models;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -84,6 +85,40 @@ namespace fastfood.Data
                 await _connection.CloseAsync();
             }
         }
+
+        public async Task<string?> PlaceOrderAsync(OrderModel model)
+        {
+            var order = new Order
+            {
+                OrderDate = DateTime.Now,
+                PaymentMode = model.PaymentMode,
+                TotalAmountPaid = model.TotalAmountPaid,
+                TotalItemsCount = model.TotalItemsCount,
+            };
+
+            if (await _connection.InsertAsync(order) > 0)
+            {
+                
+                foreach (var item in model.Items)
+                {                        
+                    item.OrderId = order.Id;
+                }
+                if (await _connection.InsertAllAsync(model.Items) == 0)
+                {                        
+                    await _connection.DeleteAsync(order);
+                    return "Commande vide";                        
+                }                                                      
+                
+            }
+            else
+            {
+                return "Error in  placing order";
+            }
+            model.Id = order.Id;
+            return null;
+
+        }
+
 
     }
 }

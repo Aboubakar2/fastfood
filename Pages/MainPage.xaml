@@ -19,9 +19,9 @@
     <Grid>
         <!-- Définir les colonnes -->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.75*" />
+            <ColumnDefinition Width="0.74*" />
             <!-- Produits -->
-            <ColumnDefinition Width="0.25*" />
+            <ColumnDefinition Width="0.26*" />
             <!-- Panier -->
         </Grid.ColumnDefinitions>
 
@@ -95,7 +95,7 @@
                                     <Label Text="{Binding Description}" TextColor="Gray" FontSize="12"/>
                                     
                                     <FlexLayout JustifyContent="SpaceBetween" >
-                                        <Label Text="{Binding Price, StringFormat='{0:c}'}" FontSize="20" TextColor="Maroon" FontAttributes="Bold"/>
+                                        <Label Text="{Binding Price, StringFormat='{0} FCFA'}" FontSize="18" TextColor="Maroon" FontAttributes="Bold"/>
                                         <ImageButton Source="add.png" HeightRequest="25"  WidthRequest="25"/>
                                     </FlexLayout>
                                 </VerticalStackLayout>
@@ -148,21 +148,21 @@
                                     <VerticalStackLayout Grid.Column="1" Spacing="5">
                                         <Label Text="{Binding Name}" TextColor="Black" FontSize="12" FontAttributes="Bold" />
                                         <Grid ColumnDefinitions="Auto,*">
-                                            <Label Grid.Column="0" Text="{Binding Price,StringFormat='{0:C}'}" TextColor="Maroon" FontAttributes="Bold"/>
-                                            <Grid Grid.Column="1" ColumnDefinitions="*,2*,*" WidthRequest="120" HorizontalOptions="End">
+                                            <Label Grid.Column="0" Text="{Binding Price,StringFormat='{0} FCFA'}" TextColor="Maroon" FontAttributes="Bold" FontSize="12"/>
+                                            <Grid Grid.Column="1" ColumnDefinitions="*,2*,*" WidthRequest="90" HorizontalOptions="End">
 
                                                 <ImageButton Grid.Column="0" BackgroundColor="Maroon" CornerRadius="5"
-                                                    MinimumWidthRequest="30" MinimumHeightRequest="30" Source="minus_color.png"
+                                                    MinimumWidthRequest="20" MinimumHeightRequest="20" Source="minus_color.png"
                                                     Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}},Path=DecreaseQuantityCommand}"
                                                     CommandParameter="{Binding .}"/>
 
 
-                                                <Label Grid.Column="1" Padding="5" BackgroundColor="Wheat" FontSize="18" HeightRequest="30"
+                                                <Label Grid.Column="1" Padding="5" BackgroundColor="Wheat" FontSize="12" HeightRequest="25"
                                                     WidthRequest="30" HorizontalOptions="Center" HorizontalTextAlignment="Center" 
                                                     Text="{Binding Quantity}" TextColor="Maroon" FontAttributes="Bold"/>
 
                                                 <ImageButton Grid.Column="2" BackgroundColor="Maroon" CornerRadius="5"
-                                                        MinimumWidthRequest="30" MinimumHeightRequest="30" Source="plus_color.png"
+                                                        MinimumWidthRequest="20" MinimumHeightRequest="20" Source="plus_color.png"
                                                         Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}},Path=IncreaseQuantityCommand}"
                                                         CommandParameter="{Binding .}"/>
                                                 </Grid>
@@ -188,7 +188,7 @@
 
             </Grid>
              
-            
+            <!--  facture -->
             <VerticalStackLayout Grid.Row="2">
                 <Border Padding="10" BackgroundColor="White" StrokeShape="RoundRectangle 10"
                         StrokeThickness="0">
@@ -196,9 +196,9 @@
                         <Shadow Brush="Maroon" Radius="15"/>
                     </Border.Shadow>
 
-                    <Grid ColumnDefinitions="2*,3*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10">
+                    <Grid ColumnDefinitions="2*,3*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10" >
                         <Label Grid.Row="0" Grid.Column="0" Text="SubTotal" Style="{StaticResource lbl}"/>
-                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding SubTotal,StringFormat='{0:C}'}" TextColor="Black" HorizontalOptions="Center" />
+                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding SubTotal,StringFormat='{0} FCFA'}" TextColor="Black" HorizontalOptions="Center" />
 
                         <HorizontalStackLayout Grid.Row="1" Grid.Column="0"  Spacing="5">
                             <Label  Text="Tax" VerticalOptions="Center" Style="{StaticResource lbl}"/>
@@ -208,19 +208,27 @@
                                 </Label.GestureRecognizers>
                             </Label>
                         </HorizontalStackLayout>
-                        <Label Grid.Column="1" Grid.Row="1" Text="{Binding TaxAmount,StringFormat='{0:C}'}" TextColor="Black" HorizontalOptions="Center"/>
+                        <Label Grid.Column="1" Grid.Row="1" Text="{Binding TaxAmount,StringFormat='{0} FCFA'}" TextColor="Black" HorizontalOptions="Center"/>
 
                         <Border Grid.Row="2" Grid.ColumnSpan="2" Stroke="Maroon" StrokeDashArray="20, 5" StrokeThickness="0.5"/>
 
                         <Label Grid.Row="3" Grid.Column="0" Text="Total" Style="{StaticResource lbl}"/>
-                        <Label Grid.Row="3" Grid.Column="1" Text="{Binding Total,StringFormat='{0:C}'}" TextColor="Black" HorizontalOptions="Center"/>
+                        <Label Grid.Row="3" Grid.Column="1" Text="{Binding Total,StringFormat='{0} FCFA'}" TextColor="Black" HorizontalOptions="Center"/>
 
                         <Border Grid.Row="4" Grid.ColumnSpan="2" Stroke="Maroon" StrokeDashArray="20, 5" StrokeThickness="0.5"/>
 
                         <Grid Grid.Row="5" Grid.ColumnSpan="2" ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="5">
                             <Button Grid.Column="0" BackgroundColor="Red" MinimumHeightRequest="25" MinimumWidthRequest="25" Text="Annuler" Command="{Binding ClearCartCommand}"/>
-                            <Button Grid.Column="1" BackgroundColor="Olive" MinimumHeightRequest="25" MinimumWidthRequest="25" Text="Cash"/>
-                            <Button Grid.Column="2" BackgroundColor="Olive" MinimumHeightRequest="25" MinimumWidthRequest="25" Text="En ligne"/>
+                            <Button Grid.Column="1" BackgroundColor="Olive" MinimumHeightRequest="25" MinimumWidthRequest="25" Text="Cash" Command="{Binding PlaceOrderCommand}">
+                                <Button.CommandParameter>
+                                    <x:Boolean>false</x:Boolean>
+                                </Button.CommandParameter>
+                            </Button>
+                            <Button Grid.Column="2" BackgroundColor="Olive" MinimumHeightRequest="25" MinimumWidthRequest="25" Text="En ligne"  Command="{Binding PlaceOrderCommand}">
+                                <Button.CommandParameter>
+                                    <x:Boolean>true</x:Boolean>
+                                </Button.CommandParameter>
+                            </Button>
                         </Grid>
 
 

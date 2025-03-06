@@ -14,9 +14,7 @@ namespace fastfood.ViewModels;
 public partial class HomeViewModel : ObservableObject
 {
     private readonly DatabaseService _databaseService;
-
-
-
+    private readonly OrdersViewModel _ordersViewModel;
     [ObservableProperty]
     private MenuCategoryModel[] _categories = [];
 
@@ -52,9 +50,10 @@ public partial class HomeViewModel : ObservableObject
 
 
 
-    public HomeViewModel(DatabaseService databaseService)
+    public HomeViewModel(DatabaseService databaseService, OrdersViewModel ordersViewModel)
     {
         _databaseService = databaseService;
+        _ordersViewModel = ordersViewModel;
         CartItems.CollectionChanged += CartItems_CollectionChanged;
     }
 
@@ -189,4 +188,16 @@ public partial class HomeViewModel : ObservableObject
         SubTotal = CartItems.Sum(c => c.Amount);
     }
 
+
+    [RelayCommand]
+    private async Task PlaceOrderAsync(bool isPaidOnline)
+    {
+        IsLoading = true;
+        await _ordersViewModel.PlaceOrderAsync([..CartItems], isPaidOnline);
+        {
+            CartItems.Clear();
+        }
+        IsLoading = false;
+
+    }
 }

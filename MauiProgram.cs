@@ -16,14 +16,20 @@ public static class MauiProgram
             fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             fonts.AddFont("Poppins-Regular.ttf", "PoppinsRegular");
             fonts.AddFont("Poppins-SeminBold.ttf", "PoppinsSemiBold");
-        }).UseMauiCommunityToolkit();
+        })
+        .UseMauiCommunityToolkit(options =>
+        {
+            options.SetShouldEnableSnackbarOnWindows(true);
+        });
+
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
 
         builder.Services.AddSingleton<DatabaseService>()
             .AddSingleton<HomeViewModel>()
-            .AddSingleton<MainPage>();
+            .AddSingleton<MainPage>()
+            .AddSingleton<OrdersViewModel>();
 
         return builder.Build();
     }

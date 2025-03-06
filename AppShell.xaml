@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:fastfood"
     xmlns:pages="clr-namespace:fastfood.Pages"
     Shell.FlyoutBehavior="Locked"
-    Shell.FlyoutWidth="200"
+    Shell.FlyoutWidth="150"
     Title="fastfood">
 
     <ShellContent
