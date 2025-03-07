@@ -7,7 +7,7 @@
     xmlns:pages="clr-namespace:fastfood.Pages"
     Shell.FlyoutBackgroundColor="#f5deb3"
     Shell.FlyoutBehavior="Locked"
-    Shell.FlyoutWidth="150"
+    Shell.FlyoutWidth="170"
     Title="fastfood">
 
 
@@ -16,29 +16,37 @@
         Icon="ic_home_ff.png"
         ContentTemplate="{DataTemplate pages:MainPage}"
         Route="MainPage" />
-    <ShellContent
-        Title="Provider"
-        Icon="ic_provider_ff.png"
-        ContentTemplate="{DataTemplate pages:ProviderPage}"
-        Route="ProviderPage"/>
 
     <ShellContent
-        Title="Products"
+        Title="Fournisseurs"
+        Icon="ic_provider_ff.png"
+        ContentTemplate="{DataTemplate pages:ProviderPage}"/>
+
+    <ShellContent
+        Title="Commandes"
+        Icon="add.png"
+        ContentTemplate="{DataTemplate pages:OrdersPage}"
+        Route="OrdersPage"/>
+
+    <ShellContent
+        Title="Produits"
         Icon="ic_food_ff.png"
         ContentTemplate="{DataTemplate pages:ProductsPage}"
         Route="ProductsPage"/>
 
     <ShellContent
-        Title="Exemption"
+        Title="Derogation"
         Icon="ic_users_ff.png"
         ContentTemplate="{DataTemplate pages:ExemptionPage}"
         Route="ExemptionPage"/>
+        
     <Shell.FlyoutFooter>
         <Image
             Source="ic_logout_ff.png"
             HorizontalOptions="Start"
             WidthRequest="20"
             Margin="15,0,0,25"
+            
             />
     </Shell.FlyoutFooter>
 

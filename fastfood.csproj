@@ -64,10 +64,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Pages\OrdersPages.xaml.cs">
+	    <DependentUpon>OrdersPages.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="Pages\ExemptionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\LoginPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\OrdersPages.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\ProductsPage.xaml">

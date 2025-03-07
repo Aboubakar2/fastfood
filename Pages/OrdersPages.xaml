@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:data="clr-namespace:fastfood.Data"
+             xmlns:models="clr-namespace:fastfood.Models"
+             xmlns:vm="clr-namespace:fastfood.ViewModels" 
+             x:DataType="vm:OrdersViewModel"
+             Shell.NavBarIsVisible="False"
+             x:Class="fastfood.Pages.OrdersPage"
+             Title="OrdersPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label" x:Key="th">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+            </Style>
+
+            <Style TargetType="Label" x:Key="td">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+    <Grid ColumnDefinitions=".75*,.25*">
+        <Grid Grid.Column="0" BackgroundColor="White" Padding="15" RowDefinitions="Auto,Auto,*" RowSpacing="15">
+            <Label Grid.Row="0" FontAttributes="Bold" FontSize="22" Text="Orders" TextColor="Black"/>
+            <Grid Grid.Row="1">
+                <Grid RowDefinitions="30,*">
+                    <Border StrokeShape="RoundRectangle 5"  StrokeThickness="0">
+                        <Grid ColumnDefinitions="*,*,*,*,*,*" BackgroundColor="Maroon">
+                            <Label Grid.Column="0" Text="Order Id" Style="{StaticResource th}"/>
+                            <Label Grid.Column="1" Text="Order Date" Style="{StaticResource th}"/>
+                            <Label Grid.Column="2" Text="Amount Paid " Style="{StaticResource th}"/>
+                            <Label Grid.Column="3" Text="Payement Mode" Style="{StaticResource th}"/>
+                            <Label Grid.Column="4" Text="No, of items" Style="{StaticResource th}"/>
+                            <Label Grid.Column="4" Text="" Style="{StaticResource th}"/>
+                        </Grid>
+                    </Border>
+
+                    <CollectionView Grid.Row="1">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:OrderModel">
+                                <Grid ColumnDefinitions="*,*,*,*,*,*" RowDefinitions="4,Auto,Auto">
+                                    <Label Grid.Column="0"  Grid.Row="1" Text="{Binding Id ,StringFormat='#{0}'}" Style="{StaticResource td}" Padding="15,0,0,0"/>
+                                    <Label Grid.Column="1"  Grid.Row="1" Text="{Binding OrderDate ,StringFormat='{0: dd MMM yyyy hh:mm:tt}'}" Style="{StaticResource td}" />
+                                    <Label Grid.Column="2"  Grid.Row="1" Text="{Binding TotalAmountPaid ,StringFormat='Rs{0:N2}'}" Style="{StaticResource td}" />
+                                    <Label Grid.Column="3"  Grid.Row="1" Text="{Binding PaymentMode}" Style="{StaticResource td}" />
+                                    <Label Grid.Column="4"  Grid.Row="1" Text="{Binding TotalItemsCount ,StringFormat='{0} Items'}" Style="{StaticResource td}" />
+                                    <Button Grid.Column="5" Grid.Row="1" Text="View Items" TextColor="White" MinimumHeightRequest="25" HeightRequest="30" BackgroundColor="DarkOliveGreen" VerticalOptions="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </Grid>
+            <BoxView IsVisible="{Binding IsLoading}" HorizontalOptions="Fill" VerticalOptions="Fill" Color="Grey" Opacity="0.2"/>
+            <ActivityIndicator IsRunning="{Binding IsLoading}" WidthRequest="25" HeightRequest="25" HorizontalOptions="Center" VerticalOptions="Center" Color="Maroon"/>
+        </Grid>
+
+        <Grid Grid.Column="1" BackgroundColor="WhiteSmoke" RowDefinitions="Auto,*">
+            
+        </Grid>
+    </Grid>
+
+</ContentPage>

@@ -4,6 +4,7 @@ using fastfood.Data;
 using fastfood.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,7 +50,6 @@ namespace fastfood.ViewModels
             }
             else
             {
-                //await Toast.Make("Order Placed Successfully ").Show();
 
                 try
                 {
@@ -67,5 +67,34 @@ namespace fastfood.ViewModels
                
             
         }
+
+
+
+        public ObservableCollection<Order> Orders { get; set; } = [];
+
+        private bool _isInitialized;
+
+
+        [ObservableProperty]
+        private bool _isLoading;
+
+        public async ValueTask InitializeAsync()
+        {
+            if (_isInitialized)
+            {
+                return;
+            }
+
+            _isInitialized = true;
+            IsLoading = true;
+            var orders = await _databaseService.GetOrdersAsync();
+            IsLoading = false;
+            foreach (var order in orders)
+            {
+                Orders.Add(order);
+            }
+            IsLoading = false;
+        }
+
     }
 }

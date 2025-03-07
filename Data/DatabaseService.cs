@@ -119,6 +119,7 @@ namespace fastfood.Data
 
         }
 
-
+        public async Task<Order[]> GetOrdersAsync() =>
+            await _connection.Table<Order>().ToArrayAsync();
     }
 }
