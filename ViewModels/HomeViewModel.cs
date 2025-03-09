@@ -153,10 +153,8 @@ public partial class HomeViewModel : ObservableObject
             RecalculateAmount();
     }
 
-
     [RelayCommand]
     private void RemoveFromCart(CartModel cartItem) => CartItems.Remove(cartItem);
-
 
 
 

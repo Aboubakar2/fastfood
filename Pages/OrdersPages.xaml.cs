@@ -15,7 +15,7 @@ public partial class OrdersPage : ContentPage
 		InitializeViewModelAsync();
 	}
 
-    private async Task InitializeViewModelAsync()=>
+    private async void InitializeViewModelAsync()=>
 		await _ordersViewModel.InitializeAsync();
    
 

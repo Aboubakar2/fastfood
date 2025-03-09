@@ -1,5 +1,6 @@
-﻿using CommunityToolkit.Maui.Alerts;
+﻿ using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using fastfood.Data;
 using fastfood.Models;
 using System;
@@ -38,6 +39,7 @@ namespace fastfood.ViewModels
             {
                 OrderDate = DateTime.Now,
                 PaymentMode = isPaidOnline ? "Online" : "Cash",
+                TotalAmountPaid = cartItems.Sum(c => c.Amount),
                 TotalItemsCount = cartItems.Length,
                 Items = OrderItems,
             };
@@ -50,7 +52,7 @@ namespace fastfood.ViewModels
             }
             else
             {
-
+                Orders.Add(orderModel);
                 try
                 {
                     await Toast.Make("Commande enregistree avec Succes").Show();
@@ -70,7 +72,7 @@ namespace fastfood.ViewModels
 
 
 
-        public ObservableCollection<Order> Orders { get; set; } = [];
+        public ObservableCollection<OrderModel> Orders { get; set; } = [];
 
         private bool _isInitialized;
 
@@ -87,12 +89,46 @@ namespace fastfood.ViewModels
 
             _isInitialized = true;
             IsLoading = true;
-            var orders = await _databaseService.GetOrdersAsync();
-            IsLoading = false;
+            var dbOrders = await _databaseService.GetOrdersAsync();
+            var orders = dbOrders.Select(o => new OrderModel
+            {
+                Id = o.Id,
+                OrderDate = o.OrderDate,
+                PaymentMode = o.PaymentMode,
+                TotalAmountPaid = o.TotalAmountPaid,
+                TotalItemsCount = o.TotalItemsCount,
+            }).ToArray();
+
             foreach (var order in orders)
             {
                 Orders.Add(order);
             }
+            IsLoading = false;
+        }
+
+        [ObservableProperty]
+        private OrderItem[] _orderItems = [];
+
+        [RelayCommand]
+        private async Task SelectOrderAsync(OrderModel? order)
+        {
+            var  preSelected = Orders.FirstOrDefault(o => o.IsSelected);
+            if (preSelected != null)
+            {
+                preSelected.IsSelected = false;
+                if(preSelected.Id == order?.Id)
+                {
+                    OrderItems = [];
+                }
+            }
+            if (order == null || order.Id == 0)
+            {
+                OrderItems = [];
+                return;
+            }
+            IsLoading = true;
+            order.IsSelected = true;
+            OrderItems = await _databaseService.GetOrderItemsAsync(order.Id);
             IsLoading = false;
         }
 

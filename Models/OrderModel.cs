@@ -1,4 +1,5 @@
-﻿using fastfood.Data;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using fastfood.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace fastfood.Models
 {
-    public class OrderModel
+    public  partial class OrderModel : ObservableObject 
     {
         public long Id { get; set; }
         public DateTime OrderDate { get; set; }
@@ -16,5 +17,8 @@ namespace fastfood.Models
         public string PaymentMode { get; set; }
 
         public OrderItem[] Items { get; set; }
+
+        [ObservableProperty]
+        private bool _isSelected;
     }
 }

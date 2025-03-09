@@ -24,7 +24,7 @@
 
     <ShellContent
         Title="Commandes"
-        Icon="add.png"
+        Icon="icon_order.png"
         ContentTemplate="{DataTemplate pages:OrdersPage}"
         Route="OrdersPage"/>
 

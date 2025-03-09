@@ -184,7 +184,7 @@
                             </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-            </CollectionView>
+            </CollectionView>  
 
             </Grid>
              
