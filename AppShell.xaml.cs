@@ -11,6 +11,7 @@ namespace fastfood
             Routing.RegisterRoute(nameof(ProductsPage), typeof(ProductsPage));
             Routing.RegisterRoute(nameof(ProviderPage), typeof(ProviderPage));
             Routing.RegisterRoute(nameof(ExemptionPage), typeof(ExemptionPage));
+            Routing.RegisterRoute(nameof(ManageMenuItemsPage), typeof(ManageMenuItemsPage));
         }
     }
 }

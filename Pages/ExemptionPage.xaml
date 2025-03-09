@@ -19,16 +19,15 @@
                             <!-- Formulaire -->
                             <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
 
-                                <!-- Ligne 1 : Fournisseur et Produit -->
                                 <Label Grid.Row="0" Grid.Column="0" Margin="200,0,0,0" TextColor="#800000" Text="Nom" FontAttributes="Bold" />
-                                <Entry Grid.Row="1" Grid.Column="0" Margin="200,0,0,0" HorizontalOptions="Start" WidthRequest="400" Placeholder="Ex:Assogba" BackgroundColor="White" />
+                                <Entry Grid.Row="1" Grid.Column="0" Margin="200,0,0,0" HorizontalOptions="Start"  WidthRequest="200" Placeholder="Ex:Assogba" BackgroundColor="White" />
 
                                 <Label Grid.Row="0" Grid.Column="1" TextColor="#800000" Text="Rôle" FontAttributes="Bold" />
-                                <Picker Grid.Row="1" Grid.Column="1"  HorizontalOptions="Start" WidthRequest="400" BackgroundColor="White" />
+                                <Picker Grid.Row="1" Grid.Column="1"  HorizontalOptions="Start"  WidthRequest="200" BackgroundColor="White" />
 
                                 <!-- Ligne 2 : Date et Quantité -->
                                 <Label Grid.Row="2" Margin="200,0,0,0" Grid.Column="0" TextColor="#800000" Text="Mail" FontAttributes="Bold" />
-                                <DatePicker Grid.Row="3" Margin="200,0,0,0" HorizontalOptions="Start" WidthRequest="400"  TextColor="Black" Grid.Column="0" Format="dd/MM/yyyy"  BackgroundColor="White" />
+                                <Entry Grid.Row="3" Margin="200,0,0,0" HorizontalOptions="Start"  WidthRequest="200"  TextColor="Black" Grid.Column="0"  BackgroundColor="White" />
 
                                 <!-- Bouton Valider -->
                                 <Button Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
@@ -42,7 +41,7 @@
                             </Grid>
 
                             <!-- Tableau statique des commandes -->
-                            <Label Text="Commandes" TextColor="#800000" FontAttributes="Bold" FontSize="Large" Margin="0,20,0,10" />
+                            <Label Text="utilisateurs" TextColor="#800000" FontAttributes="Bold" FontSize="Large" Margin="0,20,0,10" />
                             <Grid ColumnDefinitions="3*,2*,2*,2*" RowDefinitions="Auto,*"   BackgroundColor="#E2E2E2" Margin="20,0" >
 
                                 <!-- En-tête du tableau -->

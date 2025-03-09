@@ -43,21 +43,21 @@
                                 
                                 <!-- Ligne 1 : Fournisseur et Produit -->
                                 <Label Grid.Row="0" Grid.Column="0" Margin="200,0,0,0" TextColor="#800000" Text="Fournisseur" FontAttributes="Bold" />
-                                <Entry Grid.Row="1" Grid.Column="0" Margin="200,0,0,0" HorizontalOptions="Start" WidthRequest="400" Placeholder="Nom du fournisseur" BackgroundColor="White" />
+                                <Entry Grid.Row="1" Grid.Column="0" Margin="200,0,0,0" HorizontalOptions="Start" WidthRequest="200" Placeholder="Nom du fournisseur" BackgroundColor="White" />
 
                                 <Label Grid.Row="0" Grid.Column="1" TextColor="#800000" Text="Produit" FontAttributes="Bold" />
-                                <Entry Grid.Row="1" Grid.Column="1"  HorizontalOptions="Start" WidthRequest="400" Placeholder="Nom du produit" BackgroundColor="White" />
+                                <Entry Grid.Row="1" Grid.Column="1"  HorizontalOptions="Start" WidthRequest="200" Placeholder="Nom du produit" BackgroundColor="White" />
 
                                 <!-- Ligne 2 : Date et Quantité -->
                                 <Label Grid.Row="2" Margin="200,0,0,0" Grid.Column="0" TextColor="#800000" Text="Date" FontAttributes="Bold" />
-                                <DatePicker Grid.Row="3" Margin="200,0,0,0" HorizontalOptions="Start" WidthRequest="400"  TextColor="Black" Grid.Column="0" Format="dd/MM/yyyy"  BackgroundColor="White" />
+                                <DatePicker Grid.Row="3" Margin="200,0,0,0" HorizontalOptions="Start" WidthRequest="200"  TextColor="Black" Grid.Column="0" Format="dd/MM/yyyy"  BackgroundColor="White" />
 
                                 <Label Grid.Row="2" Grid.Column="1" TextColor="#800000" Text="Quantité" FontAttributes="Bold" />
-                                <Entry Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" WidthRequest="400" Keyboard="Numeric" Placeholder="Quantité" BackgroundColor="White" />
+                                <Entry Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" WidthRequest="200" Keyboard="Numeric" Placeholder="Quantité" BackgroundColor="White" />
 
                                 <!-- Ligne 3 : Statut -->
                                 <Label Grid.Row="4" Margin="200,0,0,0" Grid.Column="0" TextColor="#800000" Text="Statut" FontAttributes="Bold" />
-                                <Picker Grid.Row="5" Grid.Column="0" Margin="200,0,0,0" HorizontalOptions="Start" WidthRequest="400"  Grid.ColumnSpan="2" BackgroundColor="White" />
+                                <Picker Grid.Row="5" Grid.Column="0" Margin="200,0,0,0" HorizontalOptions="Start" WidthRequest="200"  Grid.ColumnSpan="2" BackgroundColor="White" />
 
                                 <!-- Bouton Valider -->
                                 <Button Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"

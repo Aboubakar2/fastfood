@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="fastfood.Pages.ManageMenuItemsPage"
+             xmlns:data="clr-namespace:fastfood.Data"
+             xmlns:models="clr-namespace:fastfood.Models"
+             xmlns:vm="clr-namespace:fastfood.ViewModels"
+             xmlns:controls="clr-namespace:fastfood.Controls"
+             Shell.NavBarIsVisible="False"
+             Title="ManageMenuItemsPage">
+
+    <Grid>
+        <!-- Définir les colonnes -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.74*" />
+            <!-- Produits -->
+            <ColumnDefinition Width="0.26*" />
+            <!-- Panier -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Section Produits -->
+        <Grid Grid.Column="0" RowDefinitions="Auto , Auto,*" BackgroundColor="WhiteSmoke" RowSpacing="10 " >
+
+            <controls:CategoriesListControl Grid.Row="1" Categories="{Binding Categories}" OnCategorySelected="CategoriesListControl_OnCategorySelected"/>
+
+            <Grid Grid.Row="2">
+
+                <controls:MenuItemsListControl isEditCase="True" Items="{Binding MenuItems}" OnSelectItem="MenuItemsListControl_OnSelectItem"/>
+
+                <BoxView HorizontalOptions="Fill"
+                       IsVisible="{Binding IsLoading}"
+                       Opacity="0.5"
+                       VerticalOptions="Fill"
+                       Color="Black"/>
+
+                <ActivityIndicator IsRunning="{Binding IsLoading}"
+                                 HeightRequest="30"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center"
+                                 WidthRequest="30"
+                                 Color="Maroon"/>
+            </Grid>
+        </Grid>
+
+
+        <!-- collone 2-->
+        <Grid Grid.Column="1"  BackgroundColor="Wheat" RowDefinitions="Auto,*, Auto" Padding="0,10">
+            <VerticalStackLayout Grid.Row="0" Spacing="5" Padding="10,0">
+                <Label Text="Enregistrer "  TextColor="Black" FontAttributes="Bold" FontSize="20"/>
+            </VerticalStackLayout>
+
+            <Grid Padding="10" Grid.Row="1" >
+
+            </Grid>
+
+           
+        </Grid>
+
+    </Grid>
+
+
+
+</ContentPage>

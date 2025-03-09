@@ -4,7 +4,8 @@
              x:Class="fastfood.Pages.MainPage"
              xmlns:data="clr-namespace:fastfood.Data"
              xmlns:models="clr-namespace:fastfood.Models"
-             xmlns:vm="clr-namespace:fastfood.ViewModels" 
+             xmlns:vm="clr-namespace:fastfood.ViewModels"
+             xmlns:controls="clr-namespace:fastfood.Controls"
              x:DataType="vm:HomeViewModel"
              Shell.NavBarIsVisible="False">
     <ContentPage.Resources>
@@ -28,85 +29,12 @@
         <!-- Section Produits -->
         <Grid Grid.Column="0" RowDefinitions="Auto , Auto,*" BackgroundColor="WhiteSmoke" RowSpacing="10 " >
 
-            <CollectionView Grid.Row="1" ItemsSource="{ Binding Categories }" >
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout ItemSpacing="10" Orientation="Horizontal"/>
-                </CollectionView.ItemsLayout>
-
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:MenuCategoryModel">
-                        <Border Padding="20,10"  StrokeShape="RoundRectangle 10" BackgroundColor="LightGoldenrodYellow"
-                                StrokeThickness="0">
-                            <HorizontalStackLayout Spacing="5">
-                                <Image HeightRequest="25" 
-                                       Source="{ Binding Icon }" 
-                                       VerticalOptions="Center"
-                                       WidthRequest="25"
-                                       />
-                                <Label Text="{Binding Name}" 
-                                       FontSize="16" 
-                                       VerticalOptions="Center"
-                                       TextColor="Maroon">
-                                    <Label.Triggers>
-                                        <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
-                                            <Setter Property="TextColor" Value="White"/>
-                                        </DataTrigger>
-                                    </Label.Triggers>
-                                </Label>
-                                
-                            </HorizontalStackLayout>
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}},Path=SelectCategoryCommand}"
-                                                      CommandParameter="{Binding Id}"/>
-                            </Border.GestureRecognizers>
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="Maroon"/>
-                                </DataTrigger>
-                            </Border.Triggers>
-                        </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-
+            <controls:CategoriesListControl Grid.Row="1" Categories="{Binding Categories}" OnCategorySelected="CategoriesListControl_OnCategorySelected"/>
 
             <Grid Grid.Row="2">
 
-                <CollectionView ItemsSource="{Binding MenuItems}">
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout HorizontalItemSpacing="10"
-                                         Orientation="Vertical"
-                                         Span="4"
-                                         VerticalItemSpacing="10"/>
-                    </CollectionView.ItemsLayout>
+                <controls:MenuItemsListControl Items="{Binding MenuItems}" OnSelectItem="MenuItemsListControl_OnSelectItem"/>
 
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="data:MenuItem">
-                            <Border Padding="10" Stroke="#DDD" StrokeShape="RoundRectangle 10">
-                                <VerticalStackLayout>
-                                    <Border BackgroundColor="Wheat" HeightRequest="150" StrokeThickness="0">
-                                        <Image MaximumHeightRequest="150"
-                                               Source="{Binding Icon}"
-                                               WidthRequest="250"
-                                               Aspect="AspectFill"
-                                               VerticalOptions="Center"/>
-                                    </Border>
-                                    <Label Text="{Binding Name}" TextColor="Black"/>
-                                    <Label Text="{Binding Description}" TextColor="Gray" FontSize="12"/>
-                                    
-                                    <FlexLayout JustifyContent="SpaceBetween" >
-                                        <Label Text="{Binding Price, StringFormat='{0} FCFA'}" FontSize="18" TextColor="Maroon" FontAttributes="Bold"/>
-                                        <ImageButton Source="add.png" HeightRequest="25"  WidthRequest="25"/>
-                                    </FlexLayout>
-                                </VerticalStackLayout>
-                                <Border.GestureRecognizers>
-                                    <TapGestureRecognizer  Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}},Path=AddToCartCommand}"
-                                                CommandParameter="{Binding .}"/>
-                                </Border.GestureRecognizers>
-                            </Border>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
                 <BoxView HorizontalOptions="Fill"
                          IsVisible="{Binding IsLoading}"
                          Opacity="0.5"

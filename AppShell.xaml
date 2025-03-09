@@ -18,21 +18,23 @@
         Route="MainPage" />
 
     <ShellContent
+    Title="Commandes"
+    Icon="icon_order.png"
+    ContentTemplate="{DataTemplate pages:OrdersPage}"
+    Route="OrdersPage"/>
+    
+    <ShellContent
         Title="Fournisseurs"
         Icon="ic_provider_ff.png"
         ContentTemplate="{DataTemplate pages:ProviderPage}"/>
 
-    <ShellContent
-        Title="Commandes"
-        Icon="icon_order.png"
-        ContentTemplate="{DataTemplate pages:OrdersPage}"
-        Route="OrdersPage"/>
+    
 
     <ShellContent
         Title="Produits"
         Icon="ic_food_ff.png"
-        ContentTemplate="{DataTemplate pages:ProductsPage}"
-        Route="ProductsPage"/>
+        ContentTemplate="{DataTemplate pages:ManageMenuItemsPage}"
+        Route="ManageMenuItemsPage"/>
 
     <ShellContent
         Title="Derogation"

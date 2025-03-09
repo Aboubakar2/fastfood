@@ -15,6 +15,7 @@ public partial class HomeViewModel : ObservableObject
 {
     private readonly DatabaseService _databaseService;
     private readonly OrdersViewModel _ordersViewModel;
+    
     [ObservableProperty]
     private MenuCategoryModel[] _categories = [];
 
@@ -92,7 +93,7 @@ public partial class HomeViewModel : ObservableObject
 
 
     [RelayCommand]
-    private async void SelectCategory(int categoryId)
+    private async Task SelectCategory(int categoryId)
     {
         if (SelectedCategory.Id == categoryId)
             return;

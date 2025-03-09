@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="fastfood.Controls.MenuItemsListControl"
+             xmlns:data="clr-namespace:fastfood.Data"
+             xmlns:models="clr-namespace:fastfood.Models"
+             xmlns:vm="clr-namespace:fastfood.ViewModels"
+             xmlns:controls="clr-namespace:fastfood.Controls"
+             x:Name="this">
+
+
+    <CollectionView BindingContext="{x:Reference this}"   ItemsSource="{Binding Items}">
+        <CollectionView.ItemsLayout>
+            <GridItemsLayout HorizontalItemSpacing="10"
+                                         Orientation="Vertical"
+                                         Span="4"
+                                         VerticalItemSpacing="10"/>
+        </CollectionView.ItemsLayout>
+
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="data:MenuItem">
+                <Border Padding="10" Stroke="#DDD" StrokeShape="RoundRectangle 10">
+                    <VerticalStackLayout>
+                        <Border BackgroundColor="Wheat" HeightRequest="150" StrokeThickness="0">
+                            <Image MaximumHeightRequest="150"
+                                               Source="{Binding Icon}"
+                                               WidthRequest="250"
+                                               Aspect="AspectFill"
+                                               VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="{Binding Name}" TextColor="Black"/>
+                        <Label Text="{Binding Description}" TextColor="Gray" FontSize="12"/>
+
+                        <FlexLayout JustifyContent="SpaceBetween" >
+                            <Label Text="{Binding Price, StringFormat='{0} FCFA'}" FontSize="18" TextColor="Maroon" FontAttributes="Bold"/>
+                            <ImageButton Source="{Binding Source={x:Reference this},Path=ActionIcon}}" HeightRequest="25"  WidthRequest="25"/>
+                        </FlexLayout>
+                    </VerticalStackLayout>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer  Command="{Binding Source={x:RelativeSource AncestorType={x:Type controls:MenuItemsListControl}},Path=SelectItemCommand}"
+                                                CommandParameter="{Binding .}"/>
+                    </Border.GestureRecognizers>
+                </Border>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+
+
+</ContentView>

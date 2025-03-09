@@ -1,5 +1,9 @@
 ﻿
+using fastfood.Models;
 using fastfood.ViewModels;
+using System.Threading.Tasks;
+
+using MenuItem = fastfood.Data.MenuItem;
 
 namespace fastfood.Pages
 {
@@ -18,6 +22,16 @@ namespace fastfood.Pages
          private  async  void IniTiliaze()
         {
             await _homeViewModel.InitializeAsync();
+        }
+
+        private async void CategoriesListControl_OnCategorySelected(Models.MenuCategoryModel category)
+        {
+            await _homeViewModel.SelectCategoryCommand.ExecuteAsync(category.Id);
+        }
+
+        private  void MenuItemsListControl_OnSelectItem(MenuItem menuItem)
+        {
+             _homeViewModel.AddToCartCommand.Execute(menuItem);
         }
     }
 }

@@ -64,16 +64,28 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Controls\CategoriesListControl.xaml.cs">
+	    <DependentUpon>CategoriesListControl.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Pages\OrdersPages.xaml.cs">
 	    <DependentUpon>OrdersPages.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Controls\CategoriesListControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Controls\MenuItemsListControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\ExemptionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\LoginPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\ManageMenuItemsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\OrdersPages.xaml">
