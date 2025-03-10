@@ -72,7 +72,16 @@ namespace fastfood.Data
         };
         }
 
-        
-       
+
+        public static List<Provider> GetProviders()
+        {
+            return new List<Provider>
+        {
+            new Provider { Id = 1, Name = "Dan Takoussa", PhoneNumber = "20020304" },
+            new Provider { Id = 2, Name = "Houdou younoussa", PhoneNumber = "90159756" },
+            new Provider { Id = 3, Name = "Dan Tamaske", PhoneNumber = "80800690" }
+        };
+        }
+
     }
 }

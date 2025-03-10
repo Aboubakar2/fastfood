@@ -30,6 +30,8 @@ namespace fastfood.Data
             await _connection.CreateTableAsync<MenuItemCategoryMapping>();
             await _connection.CreateTableAsync<Order>();
             await _connection.CreateTableAsync<OrderItem>();
+            await _connection.CreateTableAsync<ProductOrder>();
+            await _connection.CreateTableAsync<Provider>();
 
             await SeedDataAsync();
             var menuItems = await GetMenuItemsByCategoryAsync(1);
@@ -49,11 +51,13 @@ namespace fastfood.Data
             var categories = SeedData.GetMenuCategories();
             var menuItems = SeedData.GetMenuItems();
             var mappings = SeedData.GetMenuItemCategoryMappings();
+            var providers = SeedData.GetProviders();
 
 
             await _connection.InsertAllAsync(categories);
             await _connection.InsertAllAsync(menuItems);
             await _connection.InsertAllAsync(mappings);
+            await _connection.InsertAllAsync(providers);
 
 
         }
@@ -61,6 +65,8 @@ namespace fastfood.Data
 
         public async Task<MenuCategory[]> GetMenuCategoriesAsync() =>
             await _connection.Table<MenuCategory>().ToArrayAsync();
+
+
 
 
         public async Task<MenuItem[]> GetMenuItemsByCategoryAsync(int categoryId)
@@ -126,6 +132,73 @@ namespace fastfood.Data
             await _connection.Table<OrderItem>()
                 .Where(oi => oi.OrderId == orderId)
                 .ToArrayAsync();
-        
+
+
+        // operations pour provider
+        public async Task<List<Provider>> GetAllProvidersAsync()
+        {
+            return await _connection.Table<Provider>().ToListAsync();
+        }
+
+
+        public async Task<long> AddProviderAsync(Provider provider)
+        {
+            var result = await _connection.InsertAsync(provider);
+            return result > 0 ? provider.Id : -1;
+        }
+
+
+        public async Task<bool> UpdateProviderAsync(Provider provider)
+        {
+            var result = await _connection.UpdateAsync(provider);
+            return result > 0;
+        }
+
+        public async Task<bool> DeleteProviderAsync(Provider provider)
+        {
+            if (provider != null)
+            {
+                var result = await _connection.DeleteAsync(provider);
+                return result > 0;  // Retourne vrai si la suppression a réussi
+            }
+            return false;
+        }
+
+
+        //operations pour productOrder
+
+        public async Task<List<ProductOrder>> GetAllProductOrdersAsync()
+        {
+            return await _connection.Table<ProductOrder>().ToListAsync();
+        }
+
+        public async Task<long> AddProductOrderAsync(ProductOrder productOrder)
+        {
+            var result = await _connection.InsertAsync(productOrder);
+            return result > 0 ? productOrder.Id : -1;
+        }
+
+
+        public async Task<bool> UpdateProductOrderAsync(ProductOrder productOrder)
+        {
+            var result = await _connection.UpdateAsync(productOrder);
+            return result > 0;
+        }
+
+
+
+        public async Task<bool> DeleteProductOrderAsync(long productOrderId)
+        {
+            var productOrder = await _connection.Table<ProductOrder>().FirstOrDefaultAsync(po => po.Id == productOrderId);
+            if (productOrder != null)
+            {
+                var result = await _connection.DeleteAsync(productOrder);
+                return result > 0;
+            }
+            return false;
+        }
+
+
+
     }
 }

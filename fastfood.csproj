@@ -99,6 +99,10 @@
 	  </MauiXaml>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="g\" />
+	</ItemGroup>
+
 
 
 </Project>
