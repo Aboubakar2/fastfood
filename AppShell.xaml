@@ -5,14 +5,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:fastfood"
     xmlns:pages="clr-namespace:fastfood.Pages"
-    Shell.FlyoutBackgroundColor="#f5deb3"
+    Shell.FlyoutBackgroundColor="Wheat"
     Shell.FlyoutBehavior="Locked"
     Shell.FlyoutWidth="170"
     Title="fastfood">
 
 
     <ShellContent
-        Title="Home"
+        Title="Acceuil"
         Icon="ic_home_ff.png"
         ContentTemplate="{DataTemplate pages:MainPage}"
         Route="MainPage" />
@@ -23,11 +23,7 @@
     ContentTemplate="{DataTemplate pages:OrdersPage}"
     Route="OrdersPage"/>
     
-    <ShellContent
-        Title="Fournisseurs"
-        Icon="ic_provider_ff.png"
-        ContentTemplate="{DataTemplate pages:ProviderPage}"/>
-
+  
     
 
     <ShellContent
@@ -35,7 +31,19 @@
         Icon="ic_food_ff.png"
         ContentTemplate="{DataTemplate pages:ManageMenuItemsPage}"
         Route="ManageMenuItemsPage"/>
+    
+    
+    <ShellContent
+      Title="Fournisseurs"
+      Icon="ic_provider_ff.png"
+      ContentTemplate="{DataTemplate pages:ProviderPage}"/>
 
+    <ShellContent
+    Title="Commandes Fournisseurs"
+    Icon="ic_food_ff.png"
+    ContentTemplate="{DataTemplate pages:ProductsPage}"
+    Route="ProductsPage"/>
+    
     <ShellContent
         Title="Derogation"
         Icon="ic_users_ff.png"

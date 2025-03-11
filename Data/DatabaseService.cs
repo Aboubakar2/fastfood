@@ -185,19 +185,15 @@ namespace fastfood.Data
             return result > 0;
         }
 
-
-
-        public async Task<bool> DeleteProductOrderAsync(long productOrderId)
+        public async Task<bool> DeleteProductOrderAsync(ProductOrder productOrder)
         {
-            var productOrder = await _connection.Table<ProductOrder>().FirstOrDefaultAsync(po => po.Id == productOrderId);
             if (productOrder != null)
             {
                 var result = await _connection.DeleteAsync(productOrder);
-                return result > 0;
+                return result > 0;  // Retourne vrai si la suppression a réussi
             }
             return false;
         }
-
 
 
     }

@@ -66,38 +66,33 @@ namespace fastfood.ViewModels
             IsLoading = false;
         }
 
+        private bool ValidateForm()
+        {
+            if (string.IsNullOrWhiteSpace(SelectedProvider.Name))
+            {
+                Console.WriteLine("Le nom du fournisseur est obligatoire.");
+                return false;
+            }
 
+            if (string.IsNullOrWhiteSpace(SelectedProvider.PhoneNumber))
+            {
+                Console.WriteLine("Le numéro de téléphone est obligatoire.");
+                return false;
+            }
+
+            return true; // Tous les champs sont valides
+        }
 
         // Method to save a new provider or update an existing one
-        /*private async Task SaveProviderAsync()
-         {
-             if (IsEditMode)
-             {
-                 // Update the existing provider
-                 if (SelectedProvider != null)
-                 {
-                     await _databaseService.UpdateProviderAsync(SelectedProvider);
-
-                 }
-             }
-             else
-             {
-                 // Add a new provider
-                 if (SelectedProvider != null)
-                 {
-                     await _databaseService.AddProviderAsync(SelectedProvider);
-                     Providers.Add(SelectedProvider);  // Add the new provider directly to the list
-                 }
-             }
-
-             // Reset after saving
-             IsEditMode = false;
-             SelectedProvider = new Provider();  // Reset form
-             await InitializeAsync();
-         }*/
 
         private async Task SaveProviderAsync()
         {
+            // Valider le formulaire
+            if (!ValidateForm())
+            {
+                return; // Ne pas enregistrer si le formulaire n'est pas valide
+            }
+
             if (IsEditMode)
             {
                 // Mise à jour d'un fournisseur existant

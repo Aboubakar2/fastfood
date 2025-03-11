@@ -55,11 +55,25 @@ public partial class ProviderPage : ContentPage
         }
     }
 
-    protected override void OnDisappearing()
+    //protected override void OnDisappearing()
+    //{
+    //    var viewModel = (ProvidersViewModel)BindingContext;
+    //    viewModel.ScrollToFormRequested -= OnScrollToFormRequested;
+    //    viewModel.DeleteProviderRequested -= OnDeleteProviderRequested;
+    //    base.OnDisappearing();
+    //}
+
+
+
+    ProductOrderViewModel productOrderViewModel;
+    public async void OnGoToOrdersPageClicked(object sender, EventArgs e)
     {
-        var viewModel = (ProvidersViewModel)BindingContext;
-        viewModel.ScrollToFormRequested -= OnScrollToFormRequested;
-        viewModel.DeleteProviderRequested -= OnDeleteProviderRequested;
-        base.OnDisappearing();
+        await Navigation.PushAsync(new ProductsPage(productOrderViewModel)); // Remplace OrdersPage par la page à laquelle tu veux naviguer
+    }
+
+    // Fonction pour revenir à la page précédente
+    public async void OnGoBackClicked(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
     }
 }

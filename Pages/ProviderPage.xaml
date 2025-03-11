@@ -34,7 +34,7 @@
     </ContentPage.Resources>
 
     <Grid RowDefinitions="Auto,*">
-        <!-- Section des onglets -->
+        <!--  
         <Grid Grid.Row="0" ColumnDefinitions="*,*" Margin="20,20,20,10" HorizontalOptions="Center">
             <Button Grid.Column="0" 
                     Text="Fournisseurs" 
@@ -42,7 +42,7 @@
                     TextColor="White" 
                     CornerRadius="10" 
                     Padding="10,5" 
-                    MinimumWidthRequest="80"  />
+                    MinimumWidthRequest="80"  Clicked="OnGoBackClicked"  />
 
             <Button Grid.Column="1" 
                     Margin="20,0,0,0"
@@ -51,8 +51,8 @@
                     TextColor="Black" 
                     CornerRadius="10" 
                     Padding="10,5" 
-                    MinimumWidthRequest="80" />
-        </Grid>
+                    MinimumWidthRequest="80" Clicked="OnGoToOrdersPageClicked" />
+        </Grid> -->
 
         <!-- Contenu principal -->
         <ScrollView x:Name="MainScrollview" Grid.Row="1">

@@ -33,7 +33,7 @@
 
                         <FlexLayout JustifyContent="SpaceBetween" >
                             <Label Text="{Binding Price, StringFormat='{0} FCFA'}" FontSize="18" TextColor="Maroon" FontAttributes="Bold"/>
-                            <ImageButton Source="{Binding Source={x:Reference this},Path=ActionIcon}}" HeightRequest="25"  WidthRequest="25"/>
+                            <ImageButton Source="{Binding Source={x:Reference this},Path=ActionIcon}}" HeightRequest="20"  WidthRequest="20"/>
                         </FlexLayout>
                     </VerticalStackLayout>
                     <Border.GestureRecognizers>

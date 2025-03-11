@@ -25,7 +25,7 @@ public partial class MenuItemsListControl : ContentView
 
 	public bool isEditCase
 	{
-		set => ActionIcon = (value ? "ic_edit_ff.png" : "add.png");
+		set => ActionIcon = (value ? "edit.png" : "add.png");
 	}
 
 	[RelayCommand]

@@ -31,6 +31,8 @@ public static class MauiProgram
             .AddSingleton<OrdersPage>()
             .AddSingleton<ProviderPage>()
             .AddSingleton<ProvidersViewModel>()
+            .AddSingleton<ProductsPage>()
+            .AddSingleton<ProductOrderViewModel>()
             .AddTransient<ManageMenuViewModel>()
             .AddTransient<ManageMenuItemsPage>();
 
