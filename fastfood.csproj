@@ -23,7 +23,7 @@
 		<ApplicationTitle>fastfood</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.bakary/Isaac.fastfood</ApplicationId>
+		<ApplicationId>com.bakary.Isaac.fastfood</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -67,6 +67,9 @@
 	  <Compile Update="Controls\CategoriesListControl.xaml.cs">
 	    <DependentUpon>CategoriesListControl.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Controls\SaveMenuItemFormControl.xaml.cs">
+	    <DependentUpon>SaveMenuItemFormControl.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Pages\OrdersPages.xaml.cs">
 	    <DependentUpon>OrdersPages.xaml</DependentUpon>
 	  </Compile>
@@ -77,6 +80,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Controls\MenuItemsListControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Controls\SaveMenuItemFormControl.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\ExemptionPage.xaml">

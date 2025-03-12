@@ -8,6 +8,8 @@ using CommunityToolkit.Mvvm.Input;
 using fastfood.Data;
 using fastfood.Models;
 using Microsoft.Maui.Controls;
+
+
 using MenuItem = fastfood.Data.MenuItem;
 
 namespace fastfood.ViewModels
@@ -37,6 +39,9 @@ namespace fastfood.ViewModels
 
         private bool _isInitialized;
 
+        [ObservableProperty]
+        private MenuItemModel _menuItem = new();
+
         public async ValueTask InitializeAsync()
         {
             if (_isInitialized)
@@ -58,11 +63,38 @@ namespace fastfood.ViewModels
 
             MenuItems = await _databaseService.GetMenuItemsByCategoryAsync(SelectedCategory.Id);
 
+            SetEmptyCategoryToItem();
             IsLoading = false;
 
 
         }
 
+
+        private void SetEmptyCategoryToItem()
+        {
+            MenuItem.Categories.Clear();
+
+            foreach (var category in Categories)
+            {
+                var categoryOfitem = new MenuCategoryModel
+                {
+                    Icon = category.Icon,
+                    Id = category.Id,
+                    Name = category.Name,
+                    IsSelected = category.IsSelected,
+                };
+
+                MenuItem.Categories.Add(categoryOfitem);
+
+            }
+        }
+
+        [RelayCommand]
+        private void Cancel()
+        {
+            MenuItem = new();
+            SetEmptyCategoryToItem();
+        }
 
         [RelayCommand]
         private async Task SelectCategory(int categoryId)
@@ -89,7 +121,38 @@ namespace fastfood.ViewModels
 
         private async Task EditMenuItemAsync(MenuItem menuItem)
         {
-            await Shell.Current.DisplayAlert("Edit", "Edit Menu item", "Ok");
+            //     await Shell.Current.DisplayAlert("Edit", "Edit Menu item", "Ok");
+
+            var menuitemModel = new MenuItemModel
+            {
+              
+                Description = menuItem.Description,
+                Price = menuItem.Price,
+                Icon = menuItem.Icon,
+                Name = menuItem.Name,
+            }; 
+
+            var itemCategories = await _databaseService.GetCategoriesOfMenuItem(menuItem.Id);
+            foreach (var category in itemCategories)
+            {
+                var categoryOfItem = new MenuCategoryModel
+                {
+                    Icon = category.Icon,
+                    Id = category.Id,
+                    Name = category.Name,
+                };
+                
+                if (itemCategories.Any(c => c.Id == category.Id))
+                {
+                    categoryOfItem.IsSelected = true;
+                }
+                else
+                {
+                    categoryOfItem.IsSelected = false;
+                }
+
+                MenuItem = menuitemModel;
+            } 
         }
 
 

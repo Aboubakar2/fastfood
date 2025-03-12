@@ -23,7 +23,7 @@ public partial class MenuItemsListControl : ContentView
 
 	public string ActionIcon { get; set; } = "add.png";
 
-	public bool isEditCase
+	public bool  isEditCase
 	{
 		set => ActionIcon = (value ? "edit.png" : "add.png");
 	}

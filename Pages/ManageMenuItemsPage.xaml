@@ -7,18 +7,10 @@
              xmlns:vm="clr-namespace:fastfood.ViewModels"
              xmlns:controls="clr-namespace:fastfood.Controls"
              Shell.NavBarIsVisible="False"
-             Title="ManageMenuItemsPage">
+             x:DataType="vm:ManageMenuViewModel">
 
-    <Grid>
-        <!-- Définir les colonnes -->
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.74*" />
-            <!-- Produits -->
-            <ColumnDefinition Width="0.26*" />
-            <!-- Panier -->
-        </Grid.ColumnDefinitions>
-
-        <!-- Section Produits -->
+    <Grid ColumnDefinitions=".71*,.29*">
+        <!-- collone 1-->
         <Grid Grid.Column="0" RowDefinitions="Auto , Auto,*" BackgroundColor="WhiteSmoke" RowSpacing="10 " >
 
             <controls:CategoriesListControl Grid.Row="1" Categories="{Binding Categories}" OnCategorySelected="CategoriesListControl_OnCategorySelected"/>
@@ -50,10 +42,8 @@
             </VerticalStackLayout>
 
             <Grid Padding="10" Grid.Row="1" >
-
+                <controls:SaveMenuItemFormControl Item="{Binding MenuItem}" OnCancel="SaveMenuItemFormControl_OnCancel"  />
             </Grid>
-
-           
         </Grid>
 
     </Grid>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="fastfood.Controls.SaveMenuItemFormControl"
+             xmlns:data="clr-namespace:fastfood.Data"
+             xmlns:models="clr-namespace:fastfood.Models"
+             xmlns:controls="clr-namespace:fastfood.Controls"
+             x:Name="this">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Entry" x:Key="txtStyle">
+                <Setter Property="BackgroundColor" Value="Maroon"/>
+                <Setter Property="PlaceholderColor" Value="white"/>
+
+            </Style>
+            <Style TargetType="Label" x:Key="headingStyle">
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="Margin" Value="3"/>
+                <Setter Property="FontSize" Value="16"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <ScrollView BindingContext="{x:Reference this}">
+        <VerticalStackLayout Spacing="10">
+            <VerticalStackLayout Spacing="2">
+                <Label Text="Nom" Style="{StaticResource headingStyle}"/>
+                <Entry Text="{Binding Item.Name}" Placeholder="Entrer le nom" Style="{StaticResource txtStyle}"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="2">
+                <Label Text="Image/Icon" Style="{StaticResource headingStyle}"/>
+                <Border BackgroundColor="Maroon" HeightRequest="100" WidthRequest="100" HorizontalOptions="Center" VerticalOptions="Center"
+                        StrokeThickness="0" StrokeShape="RoundRectangle 10">
+                    <Image Source="image_placeholder.png" WidthRequest="40" BindingContext="{Binding Item.Icon}" HeightRequest="40" Aspect="AspectFit" MinimumHeightRequest="30"/>
+                </Border>
+                <Button Text="Ajouter  image" HorizontalOptions="Center" BackgroundColor="Maroon" TextColor="WhiteSmoke"
+                        FontAttributes="Bold" Margin="0,5,0,0"  />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="2">
+                <Label Text="Prix" Style="{StaticResource headingStyle}"/>
+                <Entry Text="{Binding Item.Price}" Placeholder="Entrer le prix" Style="{StaticResource txtStyle}"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="2">
+                <Label Text="Description" Style="{StaticResource headingStyle}"/>
+                <Entry Text="{Binding Item.Description}" Placeholder="Entrer la description" Style="{StaticResource txtStyle}"  MinimumHeightRequest="70"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="2">
+                <Label Text="Categories" Style="{StaticResource headingStyle}"/>
+                <CollectionView ItemsSource="{Binding Item.Categories}">
+
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="3" VerticalItemSpacing="3" HorizontalItemSpacing="3"/>
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:MenuCategoryModel">
+                            <Border BackgroundColor="White" StrokeShape="RoundRectangle 10" HeightRequest="40">
+                                <Label Text="{Binding Name}" HorizontalOptions="Center"   VerticalOptions="Center" TextColor="Maroon">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
+                                            <Setter Property="TextColor" Value="White"/>
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                        <Setter Property="BackgroundColor" Value="Maroon"/>
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type controls:SaveMenuItemFormControl}},Path=ToggleCategorySelectedCommand}"
+                                                          CommandParameter="{Binding .}"/>
+                                </Border.GestureRecognizers>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+            </VerticalStackLayout>
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="5">
+                <Button  Grid.Column="0" BackgroundColor="Red" WidthRequest="120" HorizontalOptions="Start" Text="Annuler" TextColor="White"   Command="{Binding CancelCommand}" />
+                
+                <Button  Grid.Column="1" BackgroundColor="Maroon" Text="Enregister" TextColor="White" />
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentView>

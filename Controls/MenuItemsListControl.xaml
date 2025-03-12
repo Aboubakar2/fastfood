@@ -11,9 +11,9 @@
 
     <CollectionView BindingContext="{x:Reference this}"   ItemsSource="{Binding Items}">
         <CollectionView.ItemsLayout>
-            <GridItemsLayout HorizontalItemSpacing="10"
+            <GridItemsLayout HorizontalItemSpacing="5"
                                          Orientation="Vertical"
-                                         Span="4"
+                                         Span="3"
                                          VerticalItemSpacing="10"/>
         </CollectionView.ItemsLayout>
 
@@ -33,7 +33,7 @@
 
                         <FlexLayout JustifyContent="SpaceBetween" >
                             <Label Text="{Binding Price, StringFormat='{0} FCFA'}" FontSize="18" TextColor="Maroon" FontAttributes="Bold"/>
-                            <ImageButton Source="{Binding Source={x:Reference this},Path=ActionIcon}}" HeightRequest="20"  WidthRequest="20"/>
+                            <ImageButton Source="{Binding Source={x:Reference this},Path=ActionIcon}" HeightRequest="20"  WidthRequest="20"/>
                         </FlexLayout>
                     </VerticalStackLayout>
                     <Border.GestureRecognizers>

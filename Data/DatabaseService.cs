@@ -133,6 +133,18 @@ namespace fastfood.Data
                 .Where(oi => oi.OrderId == orderId)
                 .ToArrayAsync();
 
+        public async Task<MenuCategory[]> GetCategoriesOfMenuItem(int menuItemId)
+        {
+            var query = @"
+                        SELECT cat.* 
+                        FROM MenuCategory AS cat 
+                        INNER JOIN MenuItemCategoryMapping AS mapping 
+                            ON cat.Id = mapping.MenuCategoryId
+                        WHERE mapping.MenuItemId = ?             
+            ";
+            var categories = await _connection.QueryAsync<MenuCategory>(query, menuItemId);
+            return [.. categories];
+        }
 
         // operations pour provider
         public async Task<List<Provider>> GetAllProvidersAsync()
