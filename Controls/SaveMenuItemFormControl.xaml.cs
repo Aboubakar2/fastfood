@@ -126,7 +126,7 @@ namespace fastfood.Controls
             
             if(Item.SelectedCtegories.Length == 0)
             {
-                await ErrorAlertAsync("S'il selectionner au moin sune categorie");
+                await ErrorAlertAsync("Selectionner au moins une categorie!");
                 return;
             }
 

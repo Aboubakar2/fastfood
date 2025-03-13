@@ -66,7 +66,7 @@ namespace fastfood.Data
         public async Task<MenuCategory[]> GetMenuCategoriesAsync() =>
             await _connection.Table<MenuCategory>().ToArrayAsync();
 
-        public async Task<string?> SaveMenuItemAsync(MenuItemModel model )
+        public async Task<string?> SaveMenuItemAsync(MenuItemModel model)
         {
             if (model.Id == 0)
             {
@@ -81,7 +81,7 @@ namespace fastfood.Data
 
                 };
 
-               if( await _connection.InsertAsync(menuItem) > 0)
+                if (await _connection.InsertAsync(menuItem) > 0)
                 {
                     var categoryMapping = model.SelectedCtegories
                         .Select(c => new MenuItemCategoryMapping
@@ -102,7 +102,7 @@ namespace fastfood.Data
                         await _connection.DeleteAsync(menuItem);
                     }
                 }
-                 return "Error au moment de l'enregistrement de l'item";
+                return "Error au moment de l'enregistrement de l'item";
             }
             else
             {
@@ -110,8 +110,8 @@ namespace fastfood.Data
 
                 string errorMessage = null;
 
-                await _connection.RunInTransactionAsync(db => { 
-                   
+                await _connection.RunInTransactionAsync(db => {
+
                     var menuItem = db.Find<MenuItem>(model.Id);
 
                     menuItem.Id = model.Id;
@@ -143,7 +143,7 @@ namespace fastfood.Data
                         });
 
 
-                    if(db.InsertAll(categoryMapping) == 0)
+                    if (db.InsertAll(categoryMapping) == 0)
                     {   //this operation failed
                         // return error message
                         errorMessage = "Erreur au niveau de la modification de cet  item";
@@ -153,11 +153,10 @@ namespace fastfood.Data
                 });
 
 
-                return errorMessage; 
-                
+                return errorMessage;
+
             }
         }
-
         public async Task<MenuItem[]> GetMenuItemsByCategoryAsync(int categoryId)
         {
             var query = @"

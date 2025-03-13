@@ -34,7 +34,7 @@
 
     
     <!-- Contenu principal -->
-    <Grid RowDefinitions="Auto,*">
+    <Grid RowDefinitions="Auto,*"  Margin="0,50,0,0">
         <!-- Section des onglets -->
         <!-- <Grid Grid.Row="0" ColumnDefinitions="*,*" Margin="20,20,20,10" HorizontalOptions="Center">
            

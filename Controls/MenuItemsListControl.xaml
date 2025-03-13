@@ -19,21 +19,21 @@
 
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="data:MenuItem">
-                <Border Padding="10" Stroke="#DDD" StrokeShape="RoundRectangle 10">
+                <Border Padding="10" Stroke="#DDD"  StrokeShape="RoundRectangle 10">
                     <VerticalStackLayout>
                         <Border BackgroundColor="Wheat" HeightRequest="150" StrokeThickness="0">
                             <Image MaximumHeightRequest="150"
                                                Source="{Binding Icon}"
                                                WidthRequest="250"
                                                Aspect="AspectFill"
-                                               VerticalOptions="Center"/>
+                                               />
                         </Border>
                         <Label Text="{Binding Name}" TextColor="Black"/>
                         <Label Text="{Binding Description}" TextColor="Gray" FontSize="12"/>
 
                         <FlexLayout JustifyContent="SpaceBetween" >
                             <Label Text="{Binding Price, StringFormat='{0} FCFA'}" FontSize="18" TextColor="Maroon" FontAttributes="Bold"/>
-                            <ImageButton Source="{Binding Source={x:Reference this},Path=ActionIcon}" HeightRequest="20"  WidthRequest="20"/>
+                            <ImageButton Source="{Binding Source={x:Reference this},Path=ActionIcon}" HeightRequest="20"   WidthRequest="20"/>
                         </FlexLayout>
                     </VerticalStackLayout>
                     <Border.GestureRecognizers>

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using fastfood.Data;
 using fastfood.Models;
 using Microsoft.Maui.Controls;
@@ -111,9 +112,56 @@ namespace fastfood.ViewModels
             else
             {
                 await Toast.Make("Item ajouté avec succés").Show();
+                HandleMenuItemChanged(model);
+
+                WeakReferenceMessenger.Default.Send(MenuItemChangedMessage.From(model));  
                 Cancel();
             }
             IsLoading = false;
+        }
+
+
+
+        private void HandleMenuItemChanged(MenuItemModel model)
+        {
+            var menuItem = MenuItems.FirstOrDefault(m => m.Id == model.Id);  
+
+            if (menuItem != null )
+            {
+                //this menu item is on the screen
+
+                // check if this menu item still have a mapping to select a cetegory
+
+                if (!model.SelectedCtegories.Any(c => c.Id == SelectedCategory.Id))
+                {
+                    //this item is no longer belongs to selected category
+                    //remove this from the UI 
+                    MenuItems = [.. MenuItems.Where(m => m.Id != model.Id)];
+                    return;
+                }
+                //update the details
+                menuItem.Price = model.Price;
+                menuItem.Name = model.Name;
+                menuItem.Description = model.Description;
+                menuItem.Icon = model.Icon;
+
+                MenuItems = [.. MenuItems];
+            }
+            else if(model.SelectedCtegories.Any(c => c.Id == SelectedCategory.Id)) 
+            {
+
+                var newMwnuItem = new MenuItem
+                {
+                    Id = model.Id,
+                    Name = model.Name,
+                    Description = model.Description,
+                    Icon = model.Icon,
+                    Price = model.Price,
+                };
+
+                MenuItems = [.. MenuItems, newMwnuItem];
+            }
+
         }
 
           

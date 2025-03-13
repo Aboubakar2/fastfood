@@ -6,12 +6,14 @@ using System.Collections.ObjectModel;
 using fastfood.Data;
 using fastfood.Models;
 using MenuItem = fastfood.Data.MenuItem;
-using Microsoft.Maui.Controls;
+using CommunityToolkit.Mvvm.Messaging;
+using System.Reflection;
+using Microsoft.UI.Xaml.Data;
 
 
 
 namespace fastfood.ViewModels;
-public partial class HomeViewModel : ObservableObject
+public partial class HomeViewModel : ObservableObject, IRecipient<MenuItemChangedMessage>
 {
     private readonly DatabaseService _databaseService;
     private readonly OrdersViewModel _ordersViewModel;
@@ -56,6 +58,9 @@ public partial class HomeViewModel : ObservableObject
         _databaseService = databaseService;
         _ordersViewModel = ordersViewModel;
         CartItems.CollectionChanged += CartItems_CollectionChanged;
+
+        WeakReferenceMessenger.Default.Register<MenuItemChangedMessage>(this);
+
     }
 
     private void CartItems_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -197,6 +202,66 @@ public partial class HomeViewModel : ObservableObject
             CartItems.Clear();
         }
         IsLoading = false;
+
+    }
+
+    public void Receive(MenuItemChangedMessage message)
+    {
+        var model= message.Value;
+        var menuItem = MenuItems.FirstOrDefault(m => m.Id == model.Id);
+
+
+        if (menuItem != null)
+        {
+            //this menu item is on the screen
+
+            // check if this menu item still have a mapping to select a cetegory
+
+            if (!model.SelectedCtegories.Any(c => c.Id == SelectedCategory.Id))
+            {
+                //this item is no longer belongs to selected category
+                //remove this from the UI 
+                MenuItems = [.. MenuItems.Where(m => m.Id != model.Id)];
+                return;
+            }
+            //update the details
+            menuItem.Price = model.Price;
+            menuItem.Name = model.Name;
+            menuItem.Description = model.Description;
+            menuItem.Icon = model.Icon;
+
+            MenuItems = [.. MenuItems];
+        }
+        else if (model.SelectedCtegories.Any(c => c.Id == SelectedCategory.Id))
+        {
+
+            var newMwnuItem = new MenuItem
+            {
+                Id = model.Id,
+                Name = model.Name,
+                Description = model.Description,
+                Icon = model.Icon,
+                Price = model.Price,
+            };
+
+            MenuItems = [.. MenuItems, newMwnuItem];
+        }
+
+
+        var cartItem = CartItems.FirstOrDefault(c => c.ItemId == model.Id);
+        if( cartItem != null)
+        {
+            cartItem.Name = model.Name;
+            cartItem.Price = model.Price;
+            cartItem.Icon = model.Icon;
+
+            var itemIndex  = CartItems.IndexOf(cartItem);
+            // trigger collection chande event 
+            CartItems[itemIndex] = cartItem;
+
+
+        }
+
 
     }
 }

@@ -25,7 +25,7 @@
     </ContentPage.Resources>
 
 
-    <Grid ColumnDefinitions="0.72*,0.28*">
+    <Grid ColumnDefinitions="0.70*,0.30*">
         <Grid Grid.Column="0" BackgroundColor="White" Padding="15" RowDefinitions="Auto,Auto,*" RowSpacing="15">
             <Label Grid.Row="0" FontAttributes="Bold" FontSize="22" Text="Orders" TextColor="Black"/>
             <Grid Grid.Row="1">
@@ -126,12 +126,12 @@
                             </Border>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
-                    <CollectionView.EmptyView>
-                        <Grid MinimumHeightRequest="250" RowDefinitions="*,auto,*">
-                            <VerticalStackLayout Grid.Row="1" Spacing="2">
-                                <Image Source="icon_out_of_stock.png" HeightRequest="60" WidthRequest="60" HorizontalOptions="Center"/>
-                                <Label Text="No order selected"  HorizontalOptions="Center" FontSize="20" FontAttributes="Bold" TextColor="DarkRed"/>
-                                <Label Text="Select an order to view it's items " FontSize="14" TextColor="Black" HorizontalOptions="Center"  FontAttributes="Bold"/>
+                    <CollectionView.EmptyView >
+                        <Grid MinimumHeightRequest="250" RowDefinitions="*,auto,*"  >
+                            <VerticalStackLayout Grid.Row="1" Spacing="2" VerticalOptions="Center">
+                                <Image Source="icon_out_of_stock.png" HeightRequest="120"  WidthRequest="100" HorizontalOptions="Center"/>
+                                <Label Text="Aucune commande Selectionnée"  HorizontalOptions="Center" FontSize="16" FontAttributes="Bold" TextColor="DarkRed"/>
+                                <Label Text="Selectionner une commande pour voir ses details " FontSize="12" TextColor="Black" HorizontalOptions="Center"  FontAttributes="Bold"/>
                             </VerticalStackLayout>
                         </Grid>
                     </CollectionView.EmptyView>
