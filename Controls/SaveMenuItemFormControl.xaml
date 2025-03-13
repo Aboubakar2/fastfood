@@ -32,12 +32,15 @@
 
             <VerticalStackLayout Spacing="2">
                 <Label Text="Image/Icon" Style="{StaticResource headingStyle}"/>
-                <Border BackgroundColor="Maroon" HeightRequest="100" WidthRequest="100" HorizontalOptions="Center" VerticalOptions="Center"
-                        StrokeThickness="0" StrokeShape="RoundRectangle 10">
-                    <Image Source="image_placeholder.png" WidthRequest="40" BindingContext="{Binding Item.Icon}" HeightRequest="40" Aspect="AspectFit" MinimumHeightRequest="30"/>
+                <Border BackgroundColor="Maroon" HeightRequest="100" WidthRequest="100" HorizontalOptions="Center" VerticalOptions="Center" StrokeThickness="0" StrokeShape="RoundRectangle 10">
+                        
+                    <Image x:Name="ItemIcon" Source="image_placeholder.png" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center" Aspect="AspectFill " MinimumHeightRequest="30"/>
+                    
                 </Border>
-                <Button Text="Ajouter  image" HorizontalOptions="Center" BackgroundColor="Maroon" TextColor="WhiteSmoke"
-                        FontAttributes="Bold" Margin="0,5,0,0"  />
+                
+                <!-- Pick image Butoon -->
+                <Button Text="Ajouter image" HorizontalOptions="Center" BackgroundColor="Maroon" TextColor="WhiteSmoke"
+                        FontAttributes="Bold" Margin="0,5,0,0"  Clicked="PickImageButton_Clicked" />
             </VerticalStackLayout>
 
             <VerticalStackLayout Spacing="2">
@@ -47,7 +50,7 @@
 
             <VerticalStackLayout Spacing="2">
                 <Label Text="Description" Style="{StaticResource headingStyle}"/>
-                <Entry Text="{Binding Item.Description}" Placeholder="Entrer la description" Style="{StaticResource txtStyle}"  MinimumHeightRequest="70"/>
+                <Entry Text="{Binding Item.Description}" Placeholder="Entrer la description" Style="{StaticResource txtStyle}"  MinimumHeightRequest="80"/>
             </VerticalStackLayout>
 
             <VerticalStackLayout Spacing="2">
@@ -60,7 +63,7 @@
 
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:MenuCategoryModel">
-                            <Border BackgroundColor="White" StrokeShape="RoundRectangle 10" HeightRequest="40">
+                            <Border BackgroundColor="FloralWhite" StrokeShape="RoundRectangle 10" HeightRequest="40">
                                 <Label Text="{Binding Name}" HorizontalOptions="Center"   VerticalOptions="Center" TextColor="Maroon">
                                     <Label.Triggers>
                                         <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
@@ -74,7 +77,7 @@
                                     </DataTrigger>
                                 </Border.Triggers>
                                 <Border.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type controls:SaveMenuItemFormControl}},Path=ToggleCategorySelectedCommand}"
+                                    <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type controls:SaveMenuItemFormControl}},Path=ToogleCategorySelectionCommand}"
                                                           CommandParameter="{Binding .}"/>
                                 </Border.GestureRecognizers>
                             </Border>
@@ -84,9 +87,13 @@
                 </CollectionView>
             </VerticalStackLayout>
             <Grid ColumnDefinitions="*,*" ColumnSpacing="5">
-                <Button  Grid.Column="0" BackgroundColor="Red" WidthRequest="120" HorizontalOptions="Start" Text="Annuler" TextColor="White"   Command="{Binding CancelCommand}" />
+
+                <!-- Cancel Button  -->                 
+                <Button  Grid.Column="0" BackgroundColor="Red" WidthRequest="120" HorizontalOptions="Start" Text="Annuler" TextColor="White"
+                         Command="{Binding Source={x:RelativeSource AncestorType={x:Type controls:SaveMenuItemFormControl}},Path=CancelCommand}" />
                 
-                <Button  Grid.Column="1" BackgroundColor="Maroon" Text="Enregister" TextColor="White" />
+               <!-- SAve Button -->                
+                <Button  Grid.Column="1" BackgroundColor="Maroon" Text="Enregister" TextColor="White" Command="{Binding SaveMenuItemCommand}" />
             </Grid>
         </VerticalStackLayout>
     </ScrollView>

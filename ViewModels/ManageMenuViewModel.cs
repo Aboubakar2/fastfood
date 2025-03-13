@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using fastfood.Data;
@@ -67,7 +68,7 @@ namespace fastfood.ViewModels
             IsLoading = false;
 
 
-        }
+          }
 
 
         private void SetEmptyCategoryToItem()
@@ -81,7 +82,7 @@ namespace fastfood.ViewModels
                     Icon = category.Icon,
                     Id = category.Id,
                     Name = category.Name,
-                    IsSelected = category.IsSelected,
+                    IsSelected = false,
                 };
 
                 MenuItem.Categories.Add(categoryOfitem);
@@ -94,8 +95,28 @@ namespace fastfood.ViewModels
         {
             MenuItem = new();
             SetEmptyCategoryToItem();
+        } 
+        
+        [RelayCommand]
+        private async Task SaveMenuItemAsync(MenuItemModel model)
+        {
+            IsLoading = true;
+
+            // save the menu item
+            var errorMessage = await _databaseService.SaveMenuItemAsync(model);
+            if (errorMessage != null)
+            {
+                await Shell.Current.DisplayAlert("Erreur", errorMessage, "Ok");
+            }
+            else
+            {
+                await Toast.Make("Item ajouté avec succés").Show();
+                Cancel();
+            }
+            IsLoading = false;
         }
 
+          
         [RelayCommand]
         private async Task SelectCategory(int categoryId)
         {
@@ -117,8 +138,8 @@ namespace fastfood.ViewModels
 
         }
 
-        [RelayCommand]
 
+        [RelayCommand]
         private async Task EditMenuItemAsync(MenuItem menuItem)
         {
             //     await Shell.Current.DisplayAlert("Edit", "Edit Menu item", "Ok");
@@ -127,13 +148,15 @@ namespace fastfood.ViewModels
             {
               
                 Description = menuItem.Description,
-                Price = menuItem.Price,
                 Icon = menuItem.Icon,
+                Id = menuItem.Id,
+                Price = menuItem.Price,
                 Name = menuItem.Name,
             }; 
 
             var itemCategories = await _databaseService.GetCategoriesOfMenuItem(menuItem.Id);
-            foreach (var category in itemCategories)
+           
+            foreach (var category in Categories)
             {
                 var categoryOfItem = new MenuCategoryModel
                 {
@@ -150,9 +173,10 @@ namespace fastfood.ViewModels
                 {
                     categoryOfItem.IsSelected = false;
                 }
+                menuitemModel.Categories.Add(categoryOfItem);
+            }
+            MenuItem = menuitemModel;
 
-                MenuItem = menuitemModel;
-            } 
         }
 
 

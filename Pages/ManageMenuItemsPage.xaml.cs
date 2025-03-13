@@ -1,4 +1,5 @@
 using fastfood.ViewModels;
+using System.Threading.Tasks;
 
 namespace fastfood.Pages;
 
@@ -35,6 +36,8 @@ public partial class ManageMenuItemsPage : ContentPage
         _manageMenuItemViewModel.CancelCommand.Execute(null);
     }
 
-
-    
+    private async  void SaveMenuItemFormControl_OnSaveItem(Models.MenuItemModel menuItemModel)
+    {
+       await _manageMenuItemViewModel.SaveMenuItemCommand.ExecuteAsync(menuItemModel);
+    }
 }

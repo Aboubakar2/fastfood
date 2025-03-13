@@ -127,41 +127,47 @@ namespace fastfood.ViewModels
             }
         }
 
-        private bool ValidateForm()
+        private async Task<bool> ValidateForm()
         {
+            if(SelectedProvider == null && string.IsNullOrWhiteSpace(SelectedProductOrder.ProductName) && (SelectedProductOrder.Quantity == 0) && (SelectedProductOrder.UnitPrice == 0) && string.IsNullOrWhiteSpace(SelectedProductOrder.State) && string.IsNullOrWhiteSpace(SelectedProductOrder.UnitOfMeasure))
+            {
+                await Shell.Current.DisplayAlert("Erreur de validation", "Les champs ne peuvent etre vides", "Ok");
+                return false;
+            }
+
             if (SelectedProvider == null)
             {
-                Console.WriteLine("Veuillez sélectionner un fournisseur.");
+                await Shell.Current.DisplayAlert("Erreur de validation", "Veuillez sélectionner un fournisseur.", "Ok");
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(SelectedProductOrder.ProductName))
             {
-                Console.WriteLine("Le nom du produit est obligatoire.");
+                await Shell.Current.DisplayAlert("Erreur de validation", "Le nom du produit est obligatoire.", "Ok");
                 return false;
             }
 
             if (SelectedProductOrder.Quantity <= 0)
             {
-                Console.WriteLine("La quantité doit être supérieure à zéro.");
+                await Shell.Current.DisplayAlert("Erreur de validation", "La quantité doit être supérieure à zéro.", "Ok");
                 return false;
             }
 
             if (SelectedProductOrder.UnitPrice <= 0)
             {
-                Console.WriteLine("Le prix unitaire doit être supérieur à zéro.");
+                await Shell.Current.DisplayAlert("Erreur de validation", "Le prix unitaire doit être supérieur à zéro.", "Ok");
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(SelectedProductOrder.State))
             {
-                Console.WriteLine("Le statut de la commande est obligatoire.");
+                await Shell.Current.DisplayAlert("Erreur de validation", "Le statut de la commande est obligatoire.", "Ok");
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(SelectedProductOrder.UnitOfMeasure))
             {
-                Console.WriteLine("L'unité de mesure est obligatoire.");
+                await Shell.Current.DisplayAlert("Erreur de validation", "L'unité de mesure est obligatoire.", "Ok");
                 return false;
             }
 
@@ -170,7 +176,7 @@ namespace fastfood.ViewModels
         private async Task SaveProductOrderAsync()
         {
             // Valider le formulaire
-            if (!ValidateForm())
+            if (!await ValidateForm())
             {
                 return; // Ne pas enregistrer si le formulaire n'est pas valide
             }
