@@ -2,11 +2,55 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="fastfood.Pages.LoginPage"
-             Title="LoginPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
-</ContentPage>
+             Title="LoginPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="White"
+             >
+    <!-- Conteneur principal -->
+    <Grid RowDefinitions="*, Auto" 
+          Padding="20">
+        <!-- Section principale -->
+        <StackLayout Grid.Row="0" 
+                     Spacing="20" 
+                     VerticalOptions="Center" 
+                     HorizontalOptions="Center">
+            <!-- Message d'erreur -->
+            <Label Text="{Binding ErrorMessage}" 
+                   TextColor="Red" 
+                   FontSize="Small" 
+                   HorizontalTextAlignment="Center" 
+                   IsVisible="{Binding HasError}" />
+
+            <Label Text="Se Connecter" TextColor="Black" 
+                   HorizontalOptions="Center" HorizontalTextAlignment="Center"/> 
+            <!-- Champ pour le nom d'utilisateur ou l'email -->
+            <Entry Placeholder="Nom d'utilisateur ou email" 
+                   Text="{Binding UsernameOrMail}" 
+                   Keyboard="Email" 
+                   BackgroundColor="LightGray" 
+                   HeightRequest="60" 
+                   TextColor="Black"
+                   WidthRequest="300" />
+
+            <!-- Champ pour le mot de passe -->
+            <Entry Placeholder="Mot de passe" 
+                   Text="{Binding Password}" 
+                   IsPassword="True" 
+                   BackgroundColor="LightGray" 
+                   HeightRequest="60" 
+                   WidthRequest="300" />
+
+            <!-- Bouton de connexion -->
+            <Button Grid.Row="1" 
+                Text="Se connecter" 
+                Command="{Binding LoginCommand}" 
+                BackgroundColor="Maroon" 
+                TextColor="White" 
+                CornerRadius="10" 
+                WidthRequest="200" 
+                HeightRequest="50" 
+                HorizontalOptions="Center" />
+        </StackLayout>
+
+    </Grid>
+</ContentPage> 

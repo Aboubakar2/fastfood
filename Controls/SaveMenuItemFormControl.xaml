@@ -63,7 +63,7 @@
 
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:MenuCategoryModel">
-                            <Border BackgroundColor="FloralWhite" StrokeShape="RoundRectangle 10" HeightRequest="40">
+                            <Border BackgroundColor="FloralWhite" StrokeShape="RoundRectangle 10" HeightRequest="45">
                                 <Label Text="{Binding Name}" HorizontalOptions="Center"   VerticalOptions="Center" TextColor="Maroon">
                                     <Label.Triggers>
                                         <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">

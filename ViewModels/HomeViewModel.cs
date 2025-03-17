@@ -69,6 +69,11 @@ public partial class HomeViewModel : ObservableObject, IRecipient<MenuItemChange
 
     }
 
+    public HomeViewModel(DatabaseService databaseService)
+    {
+        _databaseService = databaseService;
+    }
+
     private void CartItems_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
         RecalculateAmount();

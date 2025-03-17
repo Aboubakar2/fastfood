@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using fastfood.Data;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 
 namespace fastfood.ViewModels
@@ -20,7 +21,7 @@ namespace fastfood.ViewModels
         public ICommand SaveProviderCommand { get; }
         public ICommand EditProviderCommand { get; }
         public ICommand DeleteProviderCommand { get; }
-        public ICommand ScrollToFormRequestedCommand { get; }
+        public ICommand ScrollToFormRequestedCommand { get; }                                                                       
 
 
         public ObservableCollection<Provider> Providers { get; set; } = new ObservableCollection<Provider>();

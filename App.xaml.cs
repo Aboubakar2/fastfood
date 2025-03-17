@@ -1,4 +1,6 @@
 ﻿using fastfood.Data;
+using fastfood.Pages;
+using fastfood.ViewModels;
 
 namespace fastfood
 {
@@ -7,8 +9,8 @@ namespace fastfood
         public App(DatabaseService databaseService)
         {
             InitializeComponent();
-
-            MainPage = new AppShell();
+            var loginViewModel = new LoginViewModel(databaseService);
+            MainPage = new LoginPage(loginViewModel);
 
             Task.Run(async () => await databaseService.InitializeDatabaseAsync())
                 .GetAwaiter()
