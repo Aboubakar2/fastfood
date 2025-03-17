@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using fastfood.Data;
 using fastfood.Models;
 using Microsoft.Maui.Controls;
@@ -67,7 +69,7 @@ namespace fastfood.ViewModels
             IsLoading = false;
 
 
-        }
+          }
 
 
         private void SetEmptyCategoryToItem()
@@ -81,7 +83,7 @@ namespace fastfood.ViewModels
                     Icon = category.Icon,
                     Id = category.Id,
                     Name = category.Name,
-                    IsSelected = category.IsSelected,
+                    IsSelected = false,
                 };
 
                 MenuItem.Categories.Add(categoryOfitem);
@@ -94,8 +96,75 @@ namespace fastfood.ViewModels
         {
             MenuItem = new();
             SetEmptyCategoryToItem();
+        } 
+        
+        [RelayCommand]
+        private async Task SaveMenuItemAsync(MenuItemModel model)
+        {
+            IsLoading = true;
+
+            // save the menu item
+            var errorMessage = await _databaseService.SaveMenuItemAsync(model);
+            if (errorMessage != null)
+            {
+                await Shell.Current.DisplayAlert("Erreur", errorMessage, "Ok");
+            }
+            else
+            {
+                await Toast.Make("Item ajouté avec succés").Show();
+                HandleMenuItemChanged(model);
+
+                WeakReferenceMessenger.Default.Send(MenuItemChangedMessage.From(model));  
+                Cancel();
+            }
+            IsLoading = false;
         }
 
+
+
+        private void HandleMenuItemChanged(MenuItemModel model)
+        {
+            var menuItem = MenuItems.FirstOrDefault(m => m.Id == model.Id);  
+
+            if (menuItem != null )
+            {
+                //this menu item is on the screen
+
+                // check if this menu item still have a mapping to select a cetegory
+
+                if (!model.SelectedCtegories.Any(c => c.Id == SelectedCategory.Id))
+                {
+                    //this item is no longer belongs to selected category
+                    //remove this from the UI 
+                    MenuItems = [.. MenuItems.Where(m => m.Id != model.Id)];
+                    return;
+                }
+                //update the details
+                menuItem.Price = model.Price;
+                menuItem.Name = model.Name;
+                menuItem.Description = model.Description;
+                menuItem.Icon = model.Icon;
+
+                MenuItems = [.. MenuItems];
+            }
+            else if(model.SelectedCtegories.Any(c => c.Id == SelectedCategory.Id)) 
+            {
+
+                var newMwnuItem = new MenuItem
+                {
+                    Id = model.Id,
+                    Name = model.Name,
+                    Description = model.Description,
+                    Icon = model.Icon,
+                    Price = model.Price,
+                };
+
+                MenuItems = [.. MenuItems, newMwnuItem];
+            }
+
+        }
+
+          
         [RelayCommand]
         private async Task SelectCategory(int categoryId)
         {
@@ -117,8 +186,8 @@ namespace fastfood.ViewModels
 
         }
 
-        [RelayCommand]
 
+        [RelayCommand]
         private async Task EditMenuItemAsync(MenuItem menuItem)
         {
             //     await Shell.Current.DisplayAlert("Edit", "Edit Menu item", "Ok");
@@ -127,13 +196,15 @@ namespace fastfood.ViewModels
             {
               
                 Description = menuItem.Description,
-                Price = menuItem.Price,
                 Icon = menuItem.Icon,
+                Id = menuItem.Id,
+                Price = menuItem.Price,
                 Name = menuItem.Name,
             }; 
 
             var itemCategories = await _databaseService.GetCategoriesOfMenuItem(menuItem.Id);
-            foreach (var category in itemCategories)
+           
+            foreach (var category in Categories)
             {
                 var categoryOfItem = new MenuCategoryModel
                 {
@@ -150,9 +221,10 @@ namespace fastfood.ViewModels
                 {
                     categoryOfItem.IsSelected = false;
                 }
+                menuitemModel.Categories.Add(categoryOfItem);
+            }
+            MenuItem = menuitemModel;
 
-                MenuItem = menuitemModel;
-            } 
         }
 
 

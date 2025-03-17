@@ -66,21 +66,28 @@ namespace fastfood.ViewModels
             IsLoading = false;
         }
 
-        private bool ValidateForm()
+        private async Task<bool> ValidateForm()
         {
+            if (string.IsNullOrWhiteSpace(SelectedProvider.Name) && string.IsNullOrWhiteSpace(SelectedProvider.PhoneNumber))
+            {
+                await Shell.Current.DisplayAlert("Erreur de validation", "Les champs ne peuvent etre vides", "Ok");
+                return false;
+            } 
+
             if (string.IsNullOrWhiteSpace(SelectedProvider.Name))
             {
-                Console.WriteLine("Le nom du fournisseur est obligatoire.");
-                return false;
+                await Shell.Current.DisplayAlert("Erreur de validation", "Le nom du fournisseur est obligatoire.", "Ok");
+                return false ;
             }
 
             if (string.IsNullOrWhiteSpace(SelectedProvider.PhoneNumber))
             {
-                Console.WriteLine("Le numéro de téléphone est obligatoire.");
+                await Shell.Current.DisplayAlert("Erreur de validation", "Le numéro de téléphone est obligatoire.", "Ok");
                 return false;
             }
 
-            return true; // Tous les champs sont valides
+            return true;
+
         }
 
         // Method to save a new provider or update an existing one
@@ -88,7 +95,7 @@ namespace fastfood.ViewModels
         private async Task SaveProviderAsync()
         {
             // Valider le formulaire
-            if (!ValidateForm())
+            if (!await ValidateForm())
             {
                 return; // Ne pas enregistrer si le formulaire n'est pas valide
             }

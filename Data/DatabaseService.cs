@@ -69,9 +69,97 @@ namespace fastfood.Data
         public async Task<MenuCategory[]> GetMenuCategoriesAsync() =>
             await _connection.Table<MenuCategory>().ToArrayAsync();
 
+        public async Task<string?> SaveMenuItemAsync(MenuItemModel model)
+        {
+            if (model.Id == 0)
+            {
+                // Creatting a new menu item
+                MenuItem menuItem = new()
+                {
+                    Id = model.Id,
+                    Name = model.Name,
+                    Description = model.Description,
+                    Icon = model.Icon,
+                    Price = model.Price,
+
+                };
+
+                if (await _connection.InsertAsync(menuItem) > 0)
+                {
+                    var categoryMapping = model.SelectedCtegories
+                        .Select(c => new MenuItemCategoryMapping
+                        {
+                            Id = c.Id,
+                            MenuItemId = menuItem.Id,
+                            MenuCategoryId = c.Id
+                        });
 
 
+                    if (await _connection.InsertAllAsync(categoryMapping) > 0)
+                    {
+                        model.Id = menuItem.Id;
+                        return null;
+                    }
+                    else
+                    {
+                        await _connection.DeleteAsync(menuItem);
+                    }
+                }
+                return "Error au moment de l'enregistrement de l'item";
+            }
+            else
+            {
+                // updating a menu item 
 
+                string errorMessage = null;
+
+                await _connection.RunInTransactionAsync(db => {
+
+                    var menuItem = db.Find<MenuItem>(model.Id);
+
+                    menuItem.Id = model.Id;
+                    menuItem.Name = model.Name;
+                    menuItem.Description = model.Description;
+                    menuItem.Icon = model.Icon;
+                    menuItem.Price = model.Price;
+
+                    if (db.Update(menuItem) == 00)
+                    {
+                        //this operation failed
+                        // return error message
+                        errorMessage = "Erreur au niveau de la modification de cet  item";
+                        throw new Exception();
+                    }
+
+                    var deleteQuerry = @"
+                        DELETE FROM MenuItemCategoryMapping
+                        WHERE MenuItemId = ?";
+
+                    db.Execute(deleteQuerry, menuItem.Id);
+
+                    var categoryMapping = model.SelectedCtegories
+                        .Select(c => new MenuItemCategoryMapping
+                        {
+                            Id = c.Id,
+                            MenuItemId = menuItem.Id,
+                            MenuCategoryId = c.Id
+                        });
+
+
+                    if (db.InsertAll(categoryMapping) == 0)
+                    {   //this operation failed
+                        // return error message
+                        errorMessage = "Erreur au niveau de la modification de cet  item";
+                        throw new Exception();
+                    }
+
+                });
+
+
+                return errorMessage;
+
+            }
+        }
         public async Task<MenuItem[]> GetMenuItemsByCategoryAsync(int categoryId)
         {
             var query = @"
@@ -149,6 +237,8 @@ namespace fastfood.Data
             return [.. categories];
         }
 
+        
+        
         // operations pour provider
         public async Task<List<Provider>> GetAllProvidersAsync()
         {

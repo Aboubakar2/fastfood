@@ -26,5 +26,7 @@ namespace fastfood.Models
 
 
         public ObservableCollection<MenuCategoryModel> Categories { get; set; } = []; 
+
+        public MenuCategoryModel[] SelectedCtegories => Categories.Where(c => c.IsSelected).ToArray();
     }
 }
