@@ -58,6 +58,11 @@ public partial class HomeViewModel : ObservableObject
         CartItems.CollectionChanged += CartItems_CollectionChanged;
     }
 
+    public HomeViewModel(DatabaseService databaseService)
+    {
+        _databaseService = databaseService;
+    }
+
     private void CartItems_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
         RecalculateAmount();

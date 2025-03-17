@@ -1,64 +1,106 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:fastfood.ViewModels"
+             BackgroundColor="WhiteSmoke"
+             xmlns:data="clr-namespace:fastfood.Data"
+             xmlns:converters="clr-namespace:fastfood.Converters"
              x:Class="fastfood.Pages.ExemptionPage"
-             Title="ExemptionPage">
+             x:DataType="vm:UserViewModel"
+            Shell.NavBarIsVisible="False" >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label" x:Key="th">
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+            </Style>
+
+            <Style TargetType="Label" x:Key="td">
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+            </Style>
+
+            <Style TargetType="ImageButton" x:Key="actImgBtn">
+                <Setter Property="WidthRequest" Value="20"/>
+                <Setter Property="HeightRequest" Value="20"/>
+                <Setter Property="BackgroundColor" Value="Wheat"/>
+                <Setter Property="CornerRadius" Value="10"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <!-- Contenu principal -->
-    <Grid RowDefinitions="Auto,*">
+    <Grid RowDefinitions="Auto,*" >
 
         <!-- Contenu principal -->
-        <ScrollView Grid.Row="1">
+        <ScrollView x:Name="MainScrollView" Grid.Row="1">
             <StackLayout Margin="20" Spacing="15">
                 <!-- Conteneur pour le contenu des onglets -->
                 <ContentView>
                     <StackLayout>
                         <!-- Conteneur unique -->
 
-                        <!-- Contenu par défaut : Tab Commande -->
-                        <StackLayout x:Name="CommandeContent" IsVisible="true">
+                        <StackLayout x:Name="FormStackLayout" IsVisible="true">
                             <!-- Formulaire -->
-                            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+                            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
 
-                                <Label Grid.Row="0" Grid.Column="0" Margin="200,0,0,0" TextColor="#800000" Text="Nom" FontAttributes="Bold" />
-                                <Entry Grid.Row="1" Grid.Column="0" Margin="200,0,0,0" HorizontalOptions="Start"  WidthRequest="200" Placeholder="Ex:Assogba" BackgroundColor="White" />
+                                <Label Grid.Row="0" Grid.Column="0" VerticalOptions="Center"  TextColor="#800000" Text="Nom" Margin="150,0,0,0"  FontAttributes="Bold" />
+                                <Entry Grid.Row="1" Grid.Column="0" VerticalOptions="Center" Text="{Binding SelectedUser.UserName}"  HorizontalOptions="Center" TextColor="Black" WidthRequest="200" Placeholder="Ex:Assogba" BackgroundColor="White" />
 
-                                <Label Grid.Row="0" Grid.Column="1" TextColor="#800000" Text="Rôle" FontAttributes="Bold" />
-                                <Picker Grid.Row="1" Grid.Column="1"  HorizontalOptions="Start"  WidthRequest="200" BackgroundColor="White" />
+                                <Label Grid.Row="0" Grid.Column="1"  VerticalOptions="Center" TextColor="#800000" Text="Rôle" FontAttributes="Bold" />
+                                <Picker Grid.Row="1" Grid.Column="1" ItemsSource="{Binding RolesOptions}" SelectedItem="{Binding SelectedUser.Role}" TextColor="Black" HorizontalOptions="Start"  WidthRequest="200" BackgroundColor="White" />
 
-                                <!-- Ligne 2 : Date et Quantité -->
-                                <Label Grid.Row="2" Margin="200,0,0,0" Grid.Column="0" TextColor="#800000" Text="Mail" FontAttributes="Bold" />
-                                <Entry Grid.Row="3" Margin="200,0,0,0" HorizontalOptions="Start"  WidthRequest="200"  TextColor="Black" Grid.Column="0"  BackgroundColor="White" />
+                                <Label Grid.Row="2"  Grid.Column="0" VerticalOptions="Center" Margin="150,0,0,0" TextColor="#800000" Text="Mail" FontAttributes="Bold" />
+                                <Entry Grid.Row="3"  VerticalOptions="Center" HorizontalOptions="Center" Text="{Binding SelectedUser.Mail}" WidthRequest="200"  TextColor="Black" Grid.Column="0"  BackgroundColor="White" />
 
-                                <!-- Bouton Valider -->
-                                <Button Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
-                                 Text="Valider"
-                                 WidthRequest="100"
-                                 BackgroundColor="#800000"
-                                 HorizontalOptions="Start"
-                                 TextColor="White" 
-                                 CornerRadius="10" 
-                                 />
+                                <Label Grid.Row="2"  Grid.Column="1" VerticalOptions="Center" TextColor="#800000" Text="Password" FontAttributes="Bold" />
+                                <Entry Grid.Row="3"  VerticalOptions="Center" HorizontalOptions="Start" Text="{Binding SelectedUser.Password}" WidthRequest="200"  TextColor="Black" Grid.Column="1"  BackgroundColor="White" />
+
+
+                                <Button Grid.Row="6" Grid.Column="1"  VerticalOptions="Center" Margin="0,15,0,0" Text="{Binding IsEditMode, Converter={StaticResource EditModeButtonTextConverter}}" WidthRequest="200" BackgroundColor="Maroon" HorizontalOptions="Start" TextColor="White"
+                                        CornerRadius="10" Command="{Binding SaveUserCommand}" CommandParameter="{Binding SelectedUser}"  />
                             </Grid>
 
-                            <!-- Tableau statique des commandes -->
-                            <Label Text="utilisateurs" TextColor="#800000" FontAttributes="Bold" FontSize="Large" Margin="0,20,0,10" />
-                            <Grid ColumnDefinitions="3*,2*,2*,2*" RowDefinitions="Auto,*"   BackgroundColor="#E2E2E2" Margin="20,0" >
+                            <Grid Grid.Column="0" Margin="0,100,0,0" BackgroundColor="White" Padding="15" RowDefinitions="Auto,Auto,*" RowSpacing="15">
+                                <Grid Grid.Row="1">
+                                    <Grid RowDefinitions="30,*">
+                                        <Border StrokeShape="RoundRectangle 5" StrokeThickness="0">
+                                            <Grid ColumnDefinitions="*,*,*,*" BackgroundColor="Maroon">
+                                                <Label Grid.Column="0" Text="Nom" Style="{StaticResource th}" Padding="15,0,0,0"/>
+                                                <Label Grid.Column="1" Text="Email" Style="{StaticResource th}"/>
+                                                <Label Grid.Column="2" Text="Role" Style="{StaticResource th}"/>
+                                                <Label Grid.Column="2" Text="Password" Style="{StaticResource th}"/>
+                                                <Label Grid.Column="3" Text="Actions" Style="{StaticResource th}"/>
+                                            </Grid>
+                                        </Border>
 
-                                <!-- En-tête du tableau -->
-                                <Label Grid.Row="0" Grid.Column="0" TextColor="Black" Text="Nom" Padding="10" FontAttributes="Bold" />
-                                <Label Grid.Row="0" Grid.Column="1" TextColor="Black" Text="Mail" Padding="10" FontAttributes="Bold" />
-                                <Label Grid.Row="0" Grid.Column="2" TextColor="Black" Text="Rôle" Padding="10" FontAttributes="Bold" />
-                                <Label Grid.Row="0" Grid.Column="3" TextColor="Black" Text="Actions" Padding="10" FontAttributes="Bold" />
+                                        <CollectionView Grid.Row="1" ItemsSource="{Binding Users}">
+                                            <CollectionView.ItemTemplate>
+                                                <DataTemplate x:DataType="data:User">
+                                                    <Grid ColumnDefinitions="*,*,*,*" RowDefinitions="4,Auto,Auto">
+                                                        <Label Grid.Column="0"  Grid.Row="1" Text="{Binding UserName}" Style="{StaticResource td}" Padding="15,0,0,0"/>
+                                                        <Label Grid.Column="1"  Grid.Row="1" Text="{Binding Mail}" Style="{StaticResource td}" />
+                                                        <Label Grid.Column="2"  Grid.Row="1" Text="{Binding Role}" Style ="{StaticResource td}" />
+                                                        <Label Grid.Column="3"  Grid.Row="1" Text="{Binding Password}" Style="{StaticResource td}" />
+                                                        <HorizontalStackLayout Grid.Row="1" Grid.Column="4" Spacing="10" Padding="5" BackgroundColor="White">
+                                                            <ImageButton Source="ic_edit_ff.png" Style="{StaticResource actImgBtn}"
+                                      Command="{Binding Source={RelativeSource AncestorType={x:Type vm:UserViewModel}}, Path=EditUserCommand}"
+                                      CommandParameter="{Binding .}" />
 
-                                <!-- Exemple de ligne de commande -->
-                                <Label Grid.Row="1" Grid.Column="0" TextColor="Black" Text="Isaac" Padding="5" BackgroundColor="White" />
-                                <Label Grid.Row="1" Grid.Column="1" TextColor="Black" Text="mail@google.com" Padding="5" BackgroundColor="White" />
-                                <Label Grid.Row="1" Grid.Column="2" TextColor="Black" Text="Admin" Padding="5" BackgroundColor="White" />
-                                <HorizontalStackLayout Grid.Row="1" Grid.Column="3" Spacing="10" Padding="5" BackgroundColor="White">
-                                    <ImageButton Source="ic_edit_ff.png" WidthRequest="20" HeightRequest="20" BackgroundColor="Transparent" />
-                                    <ImageButton Source="ic_trash_ff.png" WidthRequest="20" HeightRequest="20" BackgroundColor="Transparent" />
-                                </HorizontalStackLayout>
+                                                            <ImageButton Source="ic_trash_ff.png" Style="{StaticResource actImgBtn}"
+                                       Command="{Binding Source={RelativeSource AncestorType={x:Type vm:UserViewModel}}, Path=DeleteUserCommand}"
+                                         CommandParameter="{Binding .}"         />
+                                                        </HorizontalStackLayout>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </CollectionView.ItemTemplate>
+                                        </CollectionView>
+                                    </Grid>
+                                </Grid>
                             </Grid>
+                            
+                                                   
                         </StackLayout>
 
                     </StackLayout>

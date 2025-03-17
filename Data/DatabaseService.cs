@@ -1,11 +1,13 @@
 ﻿using fastfood.Data;
 using fastfood.Models;
+using Microsoft.UI.Xaml.Documents;
 using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.UserDataTasks;
 
 namespace fastfood.Data
 {
@@ -32,6 +34,7 @@ namespace fastfood.Data
             await _connection.CreateTableAsync<OrderItem>();
             await _connection.CreateTableAsync<ProductOrder>();
             await _connection.CreateTableAsync<Provider>();
+            await _connection.CreateTableAsync<User>();
 
             await SeedDataAsync();
             var menuItems = await GetMenuItemsByCategoryAsync(1);
@@ -176,6 +179,43 @@ namespace fastfood.Data
             return false;
         }
 
+        // Operation pour userExemption
+        public async Task<List<User>> GetUsersAsync()
+        {
+            return await _connection.Table<User>().ToListAsync();
+        }
+        public async Task<long> AddUserAsync(User user)
+        {
+            var result = await _connection.InsertAsync(user);
+            return result > 0 ? user.Id : -1;
+        }
+        public async Task<bool> UpdateUserAsync(User user)
+        {
+            var result = await _connection.UpdateAsync(user);
+            return result > 0;
+        }
+        public async Task<bool> DeleteUserAsync(User user)
+        {
+            var result = await _connection.DeleteAsync(user);
+            return result > 0;
+        }
+
+
+        // O[peration pour la loginPage
+
+        public async Task<User> AuthenticationAsync(string usernameOrMail, string password)
+        {
+            var users = await GetUsersAsync();
+            var user = users.FirstOrDefault(u =>
+            (u.UserName == usernameOrMail || u.Mail == usernameOrMail) &&
+            u.Password == password
+            );
+            return user;
+        }
+
+
+
+
 
         //operations pour productOrder
 
@@ -206,6 +246,7 @@ namespace fastfood.Data
             }
             return false;
         }
+
 
 
     }

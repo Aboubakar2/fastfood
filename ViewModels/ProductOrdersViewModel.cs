@@ -191,7 +191,7 @@ namespace fastfood.ViewModels
                 var existingOrder = ProductOrders.FirstOrDefault(o => o.Id == SelectedProductOrder.Id);
                 if (existingOrder != null)
                 {
-                    // Mettre à jour les propriétés de la commande existante
+                    // Mettre à jour les propriétés de la commande existante    
                     existingOrder.ProviderId = SelectedProductOrder.ProviderId;
                     existingOrder.Provider = SelectedProductOrder.Provider;
                     existingOrder.ProductName = SelectedProductOrder.ProductName;

@@ -25,7 +25,7 @@
                                        VerticalOptions="Center"
                                        WidthRequest="25"
                                        />
-                        <Label Text="{Binding Name}" 
+                        <Label Text="{Binding Name}"
                                        FontSize="16" 
                                        VerticalOptions="Center"
                                        TextColor="Maroon">

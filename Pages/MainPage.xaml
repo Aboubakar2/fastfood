@@ -6,6 +6,7 @@
              xmlns:models="clr-namespace:fastfood.Models"
              xmlns:vm="clr-namespace:fastfood.ViewModels"
              xmlns:controls="clr-namespace:fastfood.Controls"
+             xmlns:converter="clr-namespace:fastfood.Converters"
              x:DataType="vm:HomeViewModel"
              Shell.NavBarIsVisible="False">
     <ContentPage.Resources>
