@@ -83,5 +83,15 @@ namespace fastfood.Data
         };
         }
 
+
+        public static List<User> GetUsers()
+        {
+            return new List<User>
+        {
+            new User { Id = 1, UserName = "admin", Mail = "admin@gmail.com" , Role="Administrateur", Password="admin@25"},
+            new User { Id = 2, UserName = "caissier", Mail = "caissier@gmail.com" ,Role="Caissier", Password="caisse@25"},
+        };
+        }
+
     }
 }

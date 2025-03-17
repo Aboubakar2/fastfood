@@ -55,12 +55,14 @@ namespace fastfood.Data
             var menuItems = SeedData.GetMenuItems();
             var mappings = SeedData.GetMenuItemCategoryMappings();
             var providers = SeedData.GetProviders();
+            var users = SeedData.GetUsers();
 
 
             await _connection.InsertAllAsync(categories);
             await _connection.InsertAllAsync(menuItems);
             await _connection.InsertAllAsync(mappings);
             await _connection.InsertAllAsync(providers);
+            await _connection.InsertAllAsync(users);
 
 
         }

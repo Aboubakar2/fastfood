@@ -231,25 +231,25 @@ public partial class HomeViewModel : ObservableObject, IRecipient<MenuItemChange
                 await _receiptService.PrintReceiptAsync(filePath);
 
                 // Demander à l'utilisateur s'il souhaite imprimer
-                //bool shouldPrint = await Shell.Current.DisplayAlert(
-                //    "Impression",
-                //    "Voulez-vous imprimer le ticket?",
-                //    "Oui", "Non");
+                bool shouldPrint = await Shell.Current.DisplayAlert(
+                    "Impression",
+                    "Voulez-vous imprimer le ticket?",
+                    "Oui", "Non");
 
-                //if (shouldPrint)
-                //{
-                //    // Utiliser la méthode d'impression directe
-                //    using (Process process = new Process())
-                //    {
-                //        process.StartInfo = new ProcessStartInfo
-                //        {
-                //            FileName = filePath,
-                //            UseShellExecute = true,
-                //            Verb = "print"
-                //        };
-                //        process.Start();
-                //    }
-                //}
+                if (shouldPrint)
+                {
+                    // Utiliser la méthode d'impression directe
+                    using (Process process = new Process())
+                    {
+                        process.StartInfo = new ProcessStartInfo
+                        {
+                            FileName = filePath,
+                            UseShellExecute = true,
+                            Verb = "print"
+                        };
+                        process.Start();
+                    }
+                }
 
 
                 // free the Cart
