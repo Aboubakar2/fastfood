@@ -20,6 +20,7 @@ namespace fastfood.ViewModels
         public OrdersViewModel(DatabaseService databaseService)
         {
             _databaseService = databaseService;
+            var userRole = Preferences.Get("UserRole", "Caissier");
         }
 
         public async Task<bool> PlaceOrderAsync(CartModel[] cartItems,bool isPaidOnline)

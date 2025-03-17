@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Shell
     x:Class="fastfood.AppShell"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui" 
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:fastfood"
     xmlns:pages="clr-namespace:fastfood.Pages"
@@ -11,19 +11,14 @@
     Shell.FlyoutWidth="170"
     Title="fastfood">
 
-    
+
 
     <ShellContent
         Title="Acceuil"
        
         Icon="ic_home_ff.png"
         ContentTemplate="{DataTemplate pages:MainPage}"
-        Route="MainPage" />
-    <ShellContent
-        Route="LoginPage" 
-        ContentTemplate="{DataTemplate pages:LoginPage}"
-        FlyoutItemIsVisible="False"
-        Shell.NavBarIsVisible="False"
+        Route="MainPage"
         />
 
     <ShellContent
@@ -31,10 +26,8 @@
     Icon="icon_order.png"
     ContentTemplate="{DataTemplate pages:OrdersPage}"
     Route="OrdersPage"/>
+ 
     
-  
-    
-
     <ShellContent
         Title="Produits"
         Icon="ic_food_ff.png"
@@ -45,25 +38,32 @@
     <ShellContent
       Title="Fournisseurs"
       Icon="ic_provider_ff.png"
-      ContentTemplate="{DataTemplate pages:ProviderPage}"/>
+      ContentTemplate="{DataTemplate pages:ProviderPage}"
+      IsVisible="{Binding IsAdmin}"
+        />
 
     <ShellContent
     Title="Commandes Fournisseurs"
     Icon="ic_food_ff.png"
     ContentTemplate="{DataTemplate pages:ProductsPage}"
-    Route="ProductsPage"/>
+    Route="ProductsPage"
+    IsVisible="{Binding IsAdmin}"    
+    />
     
     <ShellContent
         Title="Derogation"
         Icon="ic_users_ff.png"
         ContentTemplate="{DataTemplate pages:ExemptionPage}"
-        Route="ExemptionPage"/>
+        Route="ExemptionPage"
+        IsVisible="{Binding IsAdmin}"
+        />
         
     <Shell.FlyoutFooter>
         <ImageButton
             Source="ic_logout_ff.png"
             HorizontalOptions="Start"
-            WidthRequest="20"
+            HeightRequest="15"
+            WidthRequest="15"
             Margin="15,0,0,25"
             Command="{Binding LogoutCommand}"
             />

@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using fastfood.Data;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 
 namespace fastfood.ViewModels

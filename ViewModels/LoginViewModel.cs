@@ -49,6 +49,8 @@ namespace fastfood.ViewModels
                 var user = await _databaseService.AuthenticationAsync(UsernameOrMail, Password);
                 if (user != null)
                 {
+                    Preferences.Set("UserRole", user.Role);
+                    Console.WriteLine(user.Role);
                     Application.Current.MainPage = new AppShell();
                 }
                 else

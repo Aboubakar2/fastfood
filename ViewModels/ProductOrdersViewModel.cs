@@ -74,7 +74,6 @@ namespace fastfood.ViewModels
             EditProductOrderCommand = new RelayCommand<ProductOrder>(EditProductOrder);
             DeleteProductOrderCommand = new RelayCommand<ProductOrder>(DeleteProductOrder);
             ScrollToFormRequestedCommand = new RelayCommand(OnScrollToFormRequested);
-
             SelectedProductOrder.OrderDate = DateTime.Now;
         }
 

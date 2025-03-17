@@ -45,13 +45,13 @@
                             <!-- Formulaire -->
                             <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
 
-                                <Label Grid.Row="0" Grid.Column="0" VerticalOptions="Center"  TextColor="#800000" Text="Nom" Margin="150,0,0,0"  FontAttributes="Bold" />
+                                <Label Grid.Row="0" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center" Margin="0,0,160,0"  TextColor="#800000" Text="Nom"  FontAttributes="Bold" />
                                 <Entry Grid.Row="1" Grid.Column="0" VerticalOptions="Center" Text="{Binding SelectedUser.UserName}"  HorizontalOptions="Center" TextColor="Black" WidthRequest="200" Placeholder="Ex:Assogba" BackgroundColor="White" />
 
                                 <Label Grid.Row="0" Grid.Column="1"  VerticalOptions="Center" TextColor="#800000" Text="Rôle" FontAttributes="Bold" />
                                 <Picker Grid.Row="1" Grid.Column="1" ItemsSource="{Binding RolesOptions}" SelectedItem="{Binding SelectedUser.Role}" TextColor="Black" HorizontalOptions="Start"  WidthRequest="200" BackgroundColor="White" />
 
-                                <Label Grid.Row="2"  Grid.Column="0" VerticalOptions="Center" Margin="150,0,0,0" TextColor="#800000" Text="Mail" FontAttributes="Bold" />
+                                <Label Grid.Row="2"  Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center"  Margin="0,0,160,0" TextColor="#800000" Text="Mail" FontAttributes="Bold" />
                                 <Entry Grid.Row="3"  VerticalOptions="Center" HorizontalOptions="Center" Text="{Binding SelectedUser.Mail}" WidthRequest="200"  TextColor="Black" Grid.Column="0"  BackgroundColor="White" />
 
                                 <Label Grid.Row="2"  Grid.Column="1" VerticalOptions="Center" TextColor="#800000" Text="Password" FontAttributes="Bold" />
@@ -66,19 +66,19 @@
                                 <Grid Grid.Row="1">
                                     <Grid RowDefinitions="30,*">
                                         <Border StrokeShape="RoundRectangle 5" StrokeThickness="0">
-                                            <Grid ColumnDefinitions="*,*,*,*" BackgroundColor="Maroon">
+                                            <Grid ColumnDefinitions="*,*,*,*,*" BackgroundColor="Maroon">
                                                 <Label Grid.Column="0" Text="Nom" Style="{StaticResource th}" Padding="15,0,0,0"/>
                                                 <Label Grid.Column="1" Text="Email" Style="{StaticResource th}"/>
                                                 <Label Grid.Column="2" Text="Role" Style="{StaticResource th}"/>
-                                                <Label Grid.Column="2" Text="Password" Style="{StaticResource th}"/>
-                                                <Label Grid.Column="3" Text="Actions" Style="{StaticResource th}"/>
+                                                <Label Grid.Column="3" Text="Password" Style="{StaticResource th}"/>
+                                                <Label Grid.Column="4" Text="Actions" Style="{StaticResource th}"/>
                                             </Grid>
                                         </Border>
 
                                         <CollectionView Grid.Row="1" ItemsSource="{Binding Users}">
                                             <CollectionView.ItemTemplate>
                                                 <DataTemplate x:DataType="data:User">
-                                                    <Grid ColumnDefinitions="*,*,*,*" RowDefinitions="4,Auto,Auto">
+                                                    <Grid ColumnDefinitions="*,*,*,*,*" RowDefinitions="4,Auto,Auto">
                                                         <Label Grid.Column="0"  Grid.Row="1" Text="{Binding UserName}" Style="{StaticResource td}" Padding="15,0,0,0"/>
                                                         <Label Grid.Column="1"  Grid.Row="1" Text="{Binding Mail}" Style="{StaticResource td}" />
                                                         <Label Grid.Column="2"  Grid.Row="1" Text="{Binding Role}" Style ="{StaticResource td}" />

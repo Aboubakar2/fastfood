@@ -9,7 +9,7 @@
              Shell.NavBarIsVisible="False"
              x:DataType="vm:ManageMenuViewModel">
 
-    <Grid ColumnDefinitions=".71*,.29*">
+    <Grid ColumnDefinitions=".72*,.28*">
         <!-- collone 1-->
         <Grid Grid.Column="0" RowDefinitions="Auto , Auto,*" BackgroundColor="WhiteSmoke" RowSpacing="10 " >
 

@@ -4,6 +4,7 @@
              x:Class="fastfood.Pages.LoginPage"
              Title="LoginPage"
              Shell.NavBarIsVisible="False"
+             BackgroundColor="White"
              >
     <!-- Conteneur principal -->
     <Grid RowDefinitions="*, Auto" 
@@ -20,14 +21,15 @@
                    HorizontalTextAlignment="Center" 
                    IsVisible="{Binding HasError}" />
 
-            <Label Text="Se Connecter" TextColor="White" 
+            <Label Text="Se Connecter" TextColor="Black" 
                    HorizontalOptions="Center" HorizontalTextAlignment="Center"/> 
             <!-- Champ pour le nom d'utilisateur ou l'email -->
             <Entry Placeholder="Nom d'utilisateur ou email" 
                    Text="{Binding UsernameOrMail}" 
                    Keyboard="Email" 
                    BackgroundColor="LightGray" 
-                   HeightRequest="50" 
+                   HeightRequest="60" 
+                   TextColor="Black"
                    WidthRequest="300" />
 
             <!-- Champ pour le mot de passe -->
@@ -35,15 +37,15 @@
                    Text="{Binding Password}" 
                    IsPassword="True" 
                    BackgroundColor="LightGray" 
-                   HeightRequest="50" 
+                   HeightRequest="60" 
                    WidthRequest="300" />
 
             <!-- Bouton de connexion -->
             <Button Grid.Row="1" 
                 Text="Se connecter" 
                 Command="{Binding LoginCommand}" 
-                BackgroundColor="#800000" 
-                TextColor="Black" 
+                BackgroundColor="Maroon" 
+                TextColor="White" 
                 CornerRadius="10" 
                 WidthRequest="200" 
                 HeightRequest="50" 
