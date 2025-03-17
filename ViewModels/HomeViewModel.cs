@@ -1,22 +1,27 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.Messaging;
 
 
 using fastfood.Data;
 using fastfood.Models;
 using MenuItem = fastfood.Data.MenuItem;
-using CommunityToolkit.Mvvm.Messaging;
-using System.Reflection;
-using Microsoft.UI.Xaml.Data;
+using fastfood.Utils;
+using System.Diagnostics;
+
 
 
 
 namespace fastfood.ViewModels;
 public partial class HomeViewModel : ObservableObject, IRecipient<MenuItemChangedMessage>
 {
+    // declaring our varaiables for ViewModels Needed
     private readonly DatabaseService _databaseService;
     private readonly OrdersViewModel _ordersViewModel;
+
+    //declaring our receipt service 
+    private readonly ReceiptService _receiptService;
     
     [ObservableProperty]
     private MenuCategoryModel[] _categories = [];
@@ -24,6 +29,11 @@ public partial class HomeViewModel : ObservableObject, IRecipient<MenuItemChange
     [ObservableProperty]
     private MenuCategoryModel? _selectedCategory = null ;
 
+    public ObservableCollection<CartModel> CartItems { get; set; } = new();
+
+
+    [ObservableProperty]
+    private MenuItem[] _menuItems = [];
 
     [ObservableProperty]
     private bool _isLoading;
@@ -45,20 +55,16 @@ public partial class HomeViewModel : ObservableObject, IRecipient<MenuItemChange
 
 
 
-    public ObservableCollection<CartModel> CartItems { get; set; } = new();
-
-
-    [ObservableProperty]
-    private MenuItem[] _menuItems = [];
 
 
 
-    public HomeViewModel(DatabaseService databaseService, OrdersViewModel ordersViewModel)
+    // Constructor 
+    public HomeViewModel(DatabaseService databaseService, OrdersViewModel ordersViewModel, ReceiptService receiptService)
     {
         _databaseService = databaseService;
         _ordersViewModel = ordersViewModel;
+        _receiptService = receiptService;
         CartItems.CollectionChanged += CartItems_CollectionChanged;
-
         WeakReferenceMessenger.Default.Register<MenuItemChangedMessage>(this);
 
     }
@@ -143,7 +149,7 @@ public partial class HomeViewModel : ObservableObject, IRecipient<MenuItemChange
         }
     }
 
-    [RelayCommand]
+    [RelayCommand] 
     private void IncreaseQuantity(CartModel cartItem)
     {
         cartItem.Quantity++;
@@ -167,7 +173,7 @@ public partial class HomeViewModel : ObservableObject, IRecipient<MenuItemChange
     [RelayCommand]
     public async Task TaxPercentageClickAsync()
     {
-        var result = await Shell.Current.DisplayPromptAsync("Tax Percentage ", "Enter the applicable tax percentage ", placeholder: "10", initialValue: TaxPercentage.ToString());
+        var result = await Shell.Current.DisplayPromptAsync("Tax Percentage ", "Entrer le pourcentage de la tax applicable ", placeholder: "10", initialValue: TaxPercentage.ToString());
             if(!string.IsNullOrEmpty(result))
             {
                 if(!int.TryParse(result,out int enteredTaxpercentage))
@@ -197,10 +203,62 @@ public partial class HomeViewModel : ObservableObject, IRecipient<MenuItemChange
     private async Task PlaceOrderAsync(bool isPaidOnline)
     {
         IsLoading = true;
-        await _ordersViewModel.PlaceOrderAsync([..CartItems], isPaidOnline);
+
+        var result = await _ordersViewModel.PlaceOrderAsync([..CartItems], isPaidOnline);
+        if (result)
         {
-            CartItems.Clear();
+            try
+            {
+                // Récupérer l'ID de la dernière commande (ou créer une logique pour obtenir l'ID)
+                var orderId = await _databaseService.GetLastOrderIdAsync(); // Méthode à créer
+
+                // Générer et imprimer le ticket
+                var filePath = await _receiptService.GenerateReceiptAsync(
+                    CartItems,
+                    SubTotal,
+                    TaxPercentage,
+                    TaxAmount,
+                    Total,
+                    orderId.ToString(),
+                    isPaidOnline ? "Online" : "Cash"
+                );
+
+                await _receiptService.PrintReceiptAsync(filePath);
+
+                // Demander à l'utilisateur s'il souhaite imprimer
+                //bool shouldPrint = await Shell.Current.DisplayAlert(
+                //    "Impression",
+                //    "Voulez-vous imprimer le ticket?",
+                //    "Oui", "Non");
+
+                //if (shouldPrint)
+                //{
+                //    // Utiliser la méthode d'impression directe
+                //    using (Process process = new Process())
+                //    {
+                //        process.StartInfo = new ProcessStartInfo
+                //        {
+                //            FileName = filePath,
+                //            UseShellExecute = true,
+                //            Verb = "print"
+                //        };
+                //        process.Start();
+                //    }
+                //}
+
+
+                // free the Cart
+                CartItems.Clear();
+            }
+                         
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Erreur d'impression",
+                    $"La commande a été enregistrée mais l'impression du ticket a échoué: {ex.Message}", "OK");
+            }
         }
+
+      
         IsLoading = false;
 
     }

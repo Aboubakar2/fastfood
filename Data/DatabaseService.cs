@@ -216,6 +216,12 @@ namespace fastfood.Data
         public async Task<Order[]> GetOrdersAsync() =>
             await _connection.Table<Order>().ToArrayAsync();
 
+        public async Task<long> GetLastOrderIdAsync()
+        {
+            var lastOrder = await _connection.Table<Order>().OrderByDescending(o => o.Id).FirstOrDefaultAsync();
+            return lastOrder?.Id ?? 0;
+        }
+
         public async Task<OrderItem[]> GetOrderItemsAsync(long orderId) =>       
             await _connection.Table<OrderItem>()
                 .Where(oi => oi.OrderId == orderId)
